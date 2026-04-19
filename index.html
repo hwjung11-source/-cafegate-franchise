@@ -39,46 +39,11 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   letter-spacing: -0.02em;
+  overflow-x: hidden;
 }
 
 img { display: block; max-width: 100%; }
 a  { text-decoration: none; color: inherit; }
-
-/* ══════════════════════════════════════════
-   NAV
-══════════════════════════════════════════ */
-.nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 999;
-  background: rgba(247,245,242,0.88);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 40px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.nav-logo {
-  font-size: 17px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  color: var(--text);
-}
-.nav-logo span { color: var(--primary); }
-.nav-cta {
-  background: var(--primary);
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
-  padding: 10px 22px;
-  border-radius: 100px;
-  letter-spacing: -0.01em;
-  transition: opacity 0.18s;
-}
-.nav-cta:hover { opacity: 0.85; }
 
 /* ══════════════════════════════════════════
    LAYOUT HELPERS
@@ -122,7 +87,8 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
   font-size: 19px;
   color: var(--text-sub);
   line-height: 1.75;
-  max-width: 560px;
+  max-width: 640px;
+  word-break: keep-all;
 }
 
 .divider { height: 1px; background: var(--border); margin: 0; }
@@ -131,7 +97,6 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
    01. HERO
 ══════════════════════════════════════════ */
 .hero {
-  padding-top: 64px;
   background: var(--bg-dark);
   position: relative;
   overflow: hidden;
@@ -288,14 +253,20 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
   z-index: 2;
   border-top: 1px solid rgba(255,255,255,0.08);
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   background: rgba(0,0,0,0.25);
+  width: 100%;
+  margin: 0;
+  left: 0;
+  right: 0;
+  padding: 0 max(24px, calc((100% - 900px) / 2));
+  gap: 40px;
+  box-sizing: border-box;
 }
 .hero-stat-item {
-  padding: 28px 40px;
-  border-right: 1px solid rgba(255,255,255,0.08);
+  padding: 28px 12px;
+  text-align: center;
 }
-.hero-stat-item:last-child { border-right: none; }
 .h-stat-num {
   font-size: 36px;
   font-weight: 800;
@@ -311,6 +282,17 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
    02. 객단가 섹션
 ══════════════════════════════════════════ */
 .unitprice { background: var(--bg-white); }
+.unitprice-overlay { padding: 32px 0; }
+.unitprice-overlay-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+@media (max-width: 768px) {
+  .unitprice-overlay { padding: 24px 0; }
+  .unitprice-overlay-inner { padding: 0 20px; }
+}
 
 /* ── 객단가 섹션 업그레이드 ── */
 .up-kicker {
@@ -321,132 +303,151 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
   margin-bottom: 10px;
   letter-spacing: 0.04em;
 }
-.up-compare-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-  background: var(--bg-white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  margin: 32px 0 24px;
-}
-.up-compare-col {
-  flex: 1;
-  padding: 32px 28px;
+
+/* ── 객단가 인트로 ── */
+.up-intro {
   text-align: center;
+  max-width: 820px;
+  margin: 0 auto 48px;
+  padding: 0 16px;
+  word-break: keep-all;
 }
-.up-compare-col.right { background: #FFF5F8; }
+.up-intro-title {
+  font-size: clamp(22px, 3.2vw, 34px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.35;
+  color: var(--text);
+  margin-bottom: 18px;
+}
+.up-intro-sub {
+  font-size: clamp(15px, 1.6vw, 18px);
+  line-height: 1.7;
+  color: var(--text-sub);
+}
+.up-intro-sub .accent { color: var(--primary); font-weight: 700; }
+
+/* ── 객단가 가격 비교 카드 ── */
+.up-compare-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  background: var(--bg-white);
+  border-radius: 20px;
+  box-shadow: 0 6px 24px rgba(17,17,17,0.06);
+  padding: 32px 28px;
+  margin: 0 auto 20px;
+  max-width: 720px;
+  gap: 24px;
+}
+.up-compare-card .up-compare-mid { align-self: center; }
+.up-compare-col { text-align: center; }
 .up-compare-brand {
-  font-size: 16px;
-  color: var(--text-pale);
-  margin-bottom: 10px;
+  font-size: 15px;
+  color: var(--text-sub);
+  margin-bottom: 12px;
   line-height: 1.5;
+  font-weight: 600;
 }
 .up-compare-price {
-  font-size: clamp(36px, 5vw, 56px);
+  font-size: clamp(28px, 4.5vw, 48px);
   font-weight: 800;
-  letter-spacing: -0.05em;
-  color: var(--text);
+  letter-spacing: -0.04em;
+  color: var(--text-sub);
   line-height: 1;
 }
-.up-compare-price .won { font-size: 0.45em; color: var(--text-sub); }
+.up-compare-price .won {
+  font-size: 0.5em;
+  font-weight: 700;
+  color: var(--text-pale);
+  margin-left: 2px;
+}
 .up-compare-col.right .up-compare-price { color: var(--primary); }
+.up-compare-col.right .up-compare-price .won { color: var(--primary); opacity: 0.7; }
 .up-compare-mid {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 0 12px;
   gap: 4px;
-  flex-shrink: 0;
+  padding: 0 12px;
+}
+.up-compare-mid-num {
+  font-size: clamp(26px, 3.6vw, 34px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--primary);
 }
 .up-compare-mid-label {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 600;
   color: var(--text-sub);
   white-space: nowrap;
 }
-.up-compare-mid-num {
-  font-size: 20px;
-  font-weight: 900;
-  color: var(--primary);
-  letter-spacing: -0.03em;
-}
-.up-compare-mid-arrow {
-  font-size: 22px;
-  color: var(--primary);
-}
 
-/* 100cups vs 28sets */
-.up-cups-row {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 0;
-  background: var(--bg-white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  margin-bottom: 28px;
-}
-.up-cups-col {
-  padding: 24px 12px;
-  text-align: center;
-}
-.up-cups-col.mid {
+/* ── 100 CUPS / 동일매출 / 28 SETS 플로우 ── */
+.compare-flow {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: var(--bg);
-  padding: 24px 10px;
-  border-left: 1px solid var(--border);
-  border-right: 1px solid var(--border);
+  gap: 20px;
+  max-width: 720px;
+  margin: 0 auto 28px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 36px 40px;
 }
-.up-cups-icons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2px;
-  justify-content: center;
-  margin-bottom: 10px;
-  max-width: 120px;
+.flow-item { text-align: center; flex: 1; }
+.flow-icon {
+  display: block;
+  font-size: 42px;
+  line-height: 1;
+  margin-bottom: 14px;
 }
-.up-cups-icon { font-size: 16px; opacity: 0.35; }
-.up-cups-icon.active { opacity: 1; }
-.up-cups-num {
-  font-size: clamp(28px, 7vw, 52px);
+.flow-num {
+  font-size: clamp(36px, 5vw, 56px);
   font-weight: 900;
-  letter-spacing: -0.05em;
-  color: var(--text-sub);
+  letter-spacing: -0.04em;
+  color: var(--text);
   line-height: 1;
 }
-.up-cups-col.right .up-cups-num { color: var(--primary); }
-.up-cups-unit {
-  font-size: 16px;
+.flow-unit {
+  font-size: 14px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   color: var(--text-pale);
-  margin: 4px 0 8px;
+  margin: 6px 0 10px;
 }
-.up-cups-desc {
-  font-size: 16px;
-  color: var(--text-sub);
+.flow-desc {
+  font-size: 14px;
+  color: #444;
+  font-weight: 500;
   line-height: 1.5;
 }
-.up-cups-desc strong { color: var(--text); font-weight: 700; }
-.up-cups-mid-label {
-  font-size: 17px;
-  font-weight: 800;
-  color: var(--text);
-  margin-bottom: 4px;
-  letter-spacing: -0.02em;
+.flow-arrow {
+  font-size: 32px;
+  color: var(--primary);
+  font-weight: 900;
+  flex-shrink: 0;
+  line-height: 1;
 }
-.up-cups-mid-sub {
-  font-size: 16px;
-  color: var(--text-sub);
-  line-height: 1.5;
+.flow-center {
   text-align: center;
+  flex-shrink: 0;
+}
+.flow-equal {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--primary);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+.flow-equal-sub {
+  font-size: 13px;
+  color: #888;
+  margin-top: 4px;
+  line-height: 1.45;
 }
 .up-eq-icon {
   font-size: 28px;
@@ -499,9 +500,8 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
 /* 매출 카드 그리드 */
 .sales-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 14px;
-  margin-top: 48px;
 }
 .sales-card {
   background: var(--bg-white);
@@ -516,8 +516,8 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
   box-shadow: 0 12px 32px rgba(0,0,0,0.08);
 }
 .sales-card.big {
-  background: var(--bg-dark);
-  border-color: transparent;
+  background: #FFF5F7;
+  border: 1px solid #FFD6E0;
   text-align: center;
 }
 
@@ -529,7 +529,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
   margin-bottom: 6px;
   letter-spacing: -0.01em;
 }
-.sales-card.big .sales-card-loc { color: var(--primary-soft); }
+.sales-card.big .sales-card-loc { color: #444; font-weight: 600; }
 
 /* 매출 숫자 — 핑크, 크게 */
 .sales-card-amt {
@@ -541,7 +541,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
   margin-bottom: 2px;
 }
 .sales-card.big .sales-card-amt {
-  color: #fff;
+  color: var(--primary);
   font-size: clamp(25px, 2.9vw, 38px);
 }
 
@@ -553,7 +553,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
   margin-bottom: 10px;
   font-weight: 600;
 }
-.sales-card.big .sales-card-desc { color: rgba(255,255,255,0.75); }
+.sales-card.big .sales-card-desc { color: #444; }
 
 /* 날짜 — 하단 */
 .sales-card-date {
@@ -561,14 +561,16 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
   color: #777;
   font-weight: 500;
 }
-.sales-card.big .sales-card-date { color: rgba(255,255,255,0.4); }
+.sales-card.big .sales-card-date { color: #888; }
 
-@media (max-width: 900px) {
-  .sales-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .sales-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .sales-card { padding: 18px 14px; }
+  .sales-card { padding: 12px 8px; }
+  .sales-card-loc { font-size: 11px; }
+  .sales-card-amt { font-size: 14px; }
+  .sales-card-desc { font-size: 10px; line-height: 1.35; }
+  .sales-card-date { font-size: 10px; }
+  .sales-card.big .sales-card-amt { font-size: 15px; }
 }
 
 /* ══════════════════════════════════════════
@@ -599,26 +601,27 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
   height: 100%;
   object-fit: cover;
   object-position: center;
-  opacity: 0.18;
+  opacity: 0.35;
+  filter: brightness(1.1) contrast(1.05);
   pointer-events: none;
 }
-.renewal-col.highlight .renewal-col-img { opacity: 0.22; }
+.renewal-col.highlight .renewal-col-img { opacity: 0.4; }
 .renewal-col > *:not(.renewal-col-img) { position: relative; z-index: 1; }
 .renewal-col-tag {
   font-size: 16px;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text-pale);
+  color: var(--text-sub);
   margin-bottom: 20px;
 }
-.renewal-col.highlight .renewal-col-tag { color: rgba(255,255,255,0.35); }
+.renewal-col.highlight .renewal-col-tag { color: rgba(255,255,255,0.9); }
 .renewal-col-date {
   font-size: 16px;
   color: #555;
   margin-bottom: 12px;
 }
-.renewal-col.highlight .renewal-col-date { color: rgba(255,255,255,0.4); }
+.renewal-col.highlight .renewal-col-date { color: rgba(255,255,255,0.75); }
 .renewal-col-amt {
   font-size: clamp(32px, 5vw, 52px);
   font-weight: 800;
@@ -642,7 +645,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
 /* ══════════════════════════════════════════
    05. 최대매출구조 (이미지 그리드)
 ══════════════════════════════════════════ */
-.strength { background: var(--bg); }
+.strength { background: #ffffff; }
 
 .strength-item {
   display: grid;
@@ -655,6 +658,19 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
 .strength-item:last-child { border-bottom: none; }
 .strength-item.reverse { direction: rtl; }
 .strength-item.reverse > * { direction: ltr; }
+.strength-item.stacked {
+  grid-template-columns: 1fr;
+  gap: 40px;
+  text-align: center;
+}
+.strength-item.stacked .strength-num,
+.strength-item.stacked .strength-title,
+.strength-item.stacked .strength-desc {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.strength-item.stacked .strength-img-grid { width: 100%; }
 
 .strength-num {
   font-size: 16px;
@@ -689,7 +705,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
 }
 .strength-img-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 1px;
   background: var(--border);
   border-radius: 6px;
@@ -698,6 +714,68 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
 .strength-img-grid .strength-img {
   aspect-ratio: 1;
   border-radius: 0;
+}
+.strength-img-grid .strength-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 02 듀오 서브카드 (스페셜티 원두 + 시그니처 라떼) */
+.strength-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  width: 100%;
+  margin-top: 8px;
+}
+.strength-duo-item {
+  background: transparent;
+  border: 1px solid #F0EEF0;
+  border-radius: 16px;
+  padding: 28px 24px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.strength-duo-img {
+  background: transparent;
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.strength-duo-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 10px;
+}
+.strength-duo-title {
+  font-size: clamp(18px, 2.2vw, 22px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.35;
+  color: var(--text);
+}
+.strength-duo-desc {
+  font-size: 15px;
+  color: var(--text-sub);
+  line-height: 1.7;
+  word-break: keep-all;
+}
+.strength-duo-italic {
+  font-size: 15px;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--primary);
+}
+@media (max-width: 768px) {
+  .strength-duo { grid-template-columns: 1fr; gap: 20px; }
 }
 
 /* ══════════════════════════════════════════
@@ -883,7 +961,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
 .bean-compare {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3px;
+  gap: 0;
   border-radius: var(--radius-lg);
   overflow: hidden;
   margin-top: 40px;
@@ -891,19 +969,39 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
 .bean-col {
   background: var(--bg-white);
   border: 1px solid var(--border);
-  padding: 40px 36px;
+  padding: 40px 36px 88px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
 }
-.bean-col.ours { background: var(--bg-dark); border-color: transparent; }
+.bean-col + .bean-col { border-left: none; }
+.bean-col.ours {
+  background: #FFF5F8;
+  border: none !important;
+  outline: none !important;
+}
+.bean-col img { background: #F7F5F2 !important; image-rendering: auto; }
+.bean-col.ours img { background: transparent !important; }
+.bean-img-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 8px 0;
+}
+.bean-price-wrap { margin-top: auto; width: 100%; }
 .bean-col-tag {
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text-pale);
+  color: #333;
   margin-bottom: 24px;
 }
-.bean-col.ours .bean-col-tag { color: rgba(255,255,255,0.3); }
+.bean-col.ours .bean-col-tag { color: #111; }
 .bean-price {
   font-size: clamp(28px, 4vw, 48px);
   font-weight: 800;
@@ -912,9 +1010,9 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
   line-height: 1;
   margin-bottom: 8px;
 }
-.bean-col.ours .bean-price { color: #fff; }
+.bean-col.ours .bean-price { color: var(--primary); }
 .bean-price-sub { font-size: 16px; color: #555; }
-.bean-col.ours .bean-price-sub { color: rgba(255,255,255,0.4); }
+.bean-col.ours .bean-price-sub { color: #111; }
 .bean-diff-badge {
   display: inline-flex;
   align-items: center;
@@ -926,8 +1024,229 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
   font-size: 17px;
   font-weight: 800;
   color: #fff;
-  margin-top: 20px;
   letter-spacing: -0.01em;
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+/* 원가 경쟁력 — 두 축 구조 */
+.pillars {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  margin-top: 48px;
+}
+.pillar {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 40px 32px;
+}
+.pillar-num {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: 0.15em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.pillar-title {
+  font-size: clamp(22px, 2.8vw, 30px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.3;
+  margin-bottom: 12px;
+  color: var(--text);
+  word-break: keep-all;
+}
+.pillar-desc {
+  font-size: 16px;
+  color: var(--text-sub);
+  line-height: 1.7;
+  margin-bottom: 28px;
+  word-break: keep-all;
+}
+.pillar .bean-compare { margin-top: 0; }
+
+/* ── 주 6회 로켓 물류 ── */
+.rocket-pillar {
+  background: #fff;
+  border-radius: 20px;
+  padding: 40px;
+}
+
+/* 상단 혜택 3개 */
+.rocket-benefits {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 8px 0 36px;
+  padding-bottom: 32px;
+  border-bottom: none;
+}
+.rocket-benefit {
+  flex: 1;
+  min-width: 120px;
+  text-align: center;
+}
+.rocket-benefit-kicker {
+  font-size: 12px;
+  color: #888;
+  font-weight: 600;
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+.rocket-benefit-title {
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1.3;
+  letter-spacing: -0.03em;
+}
+.rocket-plus-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 900;
+  font-size: 20px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(255,47,106,0.25);
+  line-height: 1;
+}
+
+/* 하단 물류 플로우 */
+.rocket-flow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+.rocket-flow-step {
+  text-align: center;
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+.rocket-flow-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rocket-flow-img img {
+  width: 100%;
+  max-width: 160px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+.rocket-flow-truck .rocket-flow-img { padding-top: 24px; }
+.rocket-flow-badge {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 800;
+  padding: 8px 22px;
+  border-radius: 100px;
+  white-space: nowrap;
+  margin-bottom: 6px;
+  box-shadow: 0 3px 10px rgba(255,47,106,0.3);
+  letter-spacing: -0.01em;
+}
+.rocket-flow-label {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
+}
+.rocket-flow-arrow {
+  font-size: 26px;
+  color: #bbb;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.rocket-flow-arrow-split {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.rocket-flow-stores {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  text-align: center;
+  min-width: 0;
+}
+.rocket-flow-stores img {
+  width: 100%;
+  max-width: 80px;
+  height: auto;
+  display: block;
+}
+.rocket-flow-stores .rocket-flow-label { margin-top: 6px; }
+
+@media (max-width: 768px) {
+  .rocket-pillar { padding: 24px 18px; }
+  .rocket-benefits { gap: 10px; margin-bottom: 24px; padding-bottom: 20px; }
+  .rocket-benefit { min-width: 0; }
+  .rocket-benefit-kicker { font-size: 10px; }
+  .rocket-benefit-title { font-size: 13px; }
+  .rocket-plus-badge { width: 22px; height: 22px; font-size: 14px; }
+  .rocket-flow { gap: 6px; }
+  .rocket-flow-img img { max-width: 80px; }
+  .rocket-flow-stores img { max-width: 52px; }
+  .rocket-flow-arrow { font-size: 16px; }
+  .rocket-flow-arrow-split { font-size: 13px; gap: 2px; }
+  .rocket-flow-badge { font-size: 10px; padding: 3px 10px; }
+  .rocket-flow-label { font-size: 11px; }
+}
+
+.pillars-conclusion {
+  text-align: center;
+  margin-top: 48px;
+}
+.pillars-arrow {
+  font-size: 56px;
+  color: var(--primary);
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 20px;
+}
+.pillars-result {
+  display: inline-block;
+  font-size: clamp(26px, 3.6vw, 38px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--primary);
+  padding: 16px 40px;
+  background: rgba(255,47,106,0.08);
+  border-radius: 100px;
+}
+@media (max-width: 768px) {
+  .pillar { padding: 28px 20px; }
+  .pillars-arrow { font-size: 40px; }
+  .pillars-result { padding: 14px 26px; }
 }
 
 /* ══════════════════════════════════════════
@@ -980,6 +1299,51 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
 }
 
 /* ══════════════════════════════════════════
+   09-2. 교육과 오픈 지원
+══════════════════════════════════════════ */
+.education { background: var(--bg); }
+.education-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  margin-top: 40px;
+}
+.education-img {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  overflow: visible;
+  background: transparent;
+}
+.education-img img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  border-radius: var(--radius-lg);
+}
+.education-text { word-break: keep-all; }
+.education-headline {
+  font-size: clamp(22px, 2.8vw, 30px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.35;
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+.education-text p {
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--text-sub);
+  margin-bottom: 12px;
+}
+.education-text p:last-child { margin-bottom: 0; }
+@media (max-width: 768px) {
+  .education-grid { grid-template-columns: 1fr; gap: 28px; }
+}
+
+/* ══════════════════════════════════════════
    10. 신뢰 지표
 ══════════════════════════════════════════ */
 .trust { background: var(--bg); }
@@ -1010,69 +1374,496 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
 .trust-num .u { font-size: 22px; color: var(--primary); }
 .trust-label { font-size: 17px; color: #555; line-height: 1.5; }
 
-/* ══════════════════════════════════════════
-   11. 실매장 사례
-══════════════════════════════════════════ */
-.cases { background: var(--bg-dark); color: #fff; }
-.cases .section-title { color: #fff; }
-.cases .section-desc  { color: rgba(255,255,255,0.68); }
+/* ══ 11. 점주 스토리 ══ */
+.owner-stories { background: #FDF8F5; padding: 80px 0; }
 
-.cases-grid {
+.owner-featured {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 48px;
-}
-.case-card {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: var(--radius);
+  grid-template-columns: 280px 1fr;
+  gap: 0;
+  background: #fff;
+  border: 1px solid #EAD9CC;
+  border-radius: 16px;
   overflow: hidden;
-  transition: transform 0.2s;
+  margin-top: 48px;
+  margin-bottom: 24px;
 }
-.case-card:hover { transform: translateY(-4px); }
-.case-card-top {
-  background: rgba(255,47,106,0.12);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  padding: 24px 28px;
+.owner-featured-img {
+  background: #E8D8C8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+  text-align: center;
+  color: #aaa;
+  font-size: 14px;
+  line-height: 1.7;
+  padding: 24px;
 }
-.case-card-type {
-  font-size: 17px;
+.owner-featured-body {
+  padding: 36px 36px 36px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.owner-featured-tag {
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  color: var(--primary);
   text-transform: uppercase;
-  color: var(--primary-soft);
-  margin-bottom: 8px;
+  letter-spacing: .06em;
 }
-.case-card-name {
+.owner-featured-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #1a1a1a;
+  line-height: 1.4;
+}
+.owner-featured-quote {
+  font-size: 15px;
+  color: #1a1a1a;
+  line-height: 1.75;
+  border-left: 3px solid var(--primary);
+  padding-left: 16px;
+}
+.owner-featured-from { font-size: 13px; color: #999; }
+.owner-featured-link {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+}
+.owner-featured-link:hover { opacity: .75; }
+
+.owner-list { display: flex; flex-direction: column; gap: 16px; }
+
+.owner-item {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 0;
+  background: #fff;
+  border: 1px solid #EAD9CC;
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  transition: box-shadow .2s, transform .2s;
+}
+.owner-item:hover { box-shadow: 0 6px 20px rgba(0,0,0,.08); transform: translateY(-2px); }
+.owner-thumb {
+  overflow: hidden;
+  flex-shrink: 0;
+  width: 200px;
+  min-width: 200px;
+}
+.owner-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.owner-item-body { padding: 16px 20px; display: flex; flex-direction: column; gap: 6px; justify-content: center; }
+.owner-item-title { font-size: 15px; font-weight: 700; color: #1a1a1a; line-height: 1.4; word-break: keep-all; }
+.owner-item-desc { font-size: 13px; color: #222; line-height: 1.6; word-break: keep-all; }
+.owner-item-from { font-size: 12px; color: #bbb; }
+
+@media (max-width: 768px) {
+  .owner-featured { grid-template-columns: 1fr; }
+  .owner-featured-img { min-height: 160px; }
+  .owner-featured-body { padding: 24px; }
+}
+@media (max-width: 480px) {
+  .owner-item { grid-template-columns: 130px 1fr; }
+  .owner-thumb {
+    width: 130px;
+    min-width: 130px;
+  }
+  .owner-item-title { font-size: 13px; }
+  .owner-item-desc { font-size: 12px; }
+  .owner-item-body { padding: 12px 14px; }
+}
+
+/* ══════════════════════════════════════════
+   11-2. 개설비용 & 타사 비교 테이블
+══════════════════════════════════════════ */
+.cost-sec { padding: 100px 0; background: var(--bg-white); }
+.cost-sec.alt { background: var(--bg); }
+
+.cost-title {
+  font-size: clamp(26px, 4vw, 42px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.3;
+  margin-bottom: 16px;
+  word-break: keep-all;
+}
+.cost-title .brown { color: #8B5E3C; }
+.cost-title .pink  { color: var(--primary); }
+
+.cost-desc {
+  font-size: 17px;
+  color: var(--text-sub);
+  line-height: 1.7;
+  max-width: 760px;
+  margin-bottom: 40px;
+  word-break: keep-all;
+}
+
+.cost-table-wrap {
+  overflow-x: auto;
+  border: 1px solid #EDE9E3;
+  border-radius: 12px;
+  background: #fff;
+  -webkit-overflow-scrolling: touch;
+}
+.cost-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  min-width: 720px;
+}
+.cost-table thead th {
+  background: var(--bg);
+  color: #222;
+  font-weight: 700;
+  padding: 16px 14px;
+  border-bottom: 1px solid #EDE9E3;
+  text-align: center;
+  letter-spacing: -0.01em;
+  position: relative;
+  white-space: nowrap;
+}
+.cost-table tbody td {
+  padding: 14px;
+  border-bottom: 1px solid #EDE9E3;
+  color: #222;
+  vertical-align: middle;
+  line-height: 1.5;
+  text-align: center;
+}
+.cost-table tbody tr:last-child td { border-bottom: none; }
+.cost-table tbody tr:hover td { background: #FAFAFA; }
+.cost-table .col-item {
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  background: #FCFBF9;
+  text-align: center;
+}
+.cost-table tbody tr:hover .col-item { background: #F4F1ED; }
+.cost-table .col-desc {
+  color: #333;
+  font-size: 14px;
+  line-height: 1.55;
+  min-width: 260px;
+  text-align: center;
+}
+.cost-table .col-num { white-space: nowrap; min-width: 130px; }
+.cost-strike {
+  text-decoration: line-through;
+  color: #AAAAAA;
+  font-size: 13px;
+  margin-right: 4px;
+}
+.cost-free {
+  color: var(--primary);
+  font-weight: 800;
+  font-size: 18px;
+}
+.cost-new {
+  color: var(--primary);
+  font-weight: 800;
+}
+.cost-diff {
+  display: block;
+  font-size: 12px;
+  color: #888;
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+.cost-table tr.total-row td {
+  background: #FFF0F4;
+  font-weight: 800;
+  color: var(--text);
+}
+.cost-table tr.total-row:hover td { background: #FFE5EC; }
+.cost-table tr.total-row .col-num { color: var(--primary); font-size: 17px; }
+
+/* 평수 탭 */
+.cost-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+.cost-tab {
+  appearance: none;
+  background: #F0EEF0;
+  color: #444;
+  border: none;
+  border-radius: 100px;
+  padding: 12px 28px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.cost-tab:hover { background: #E6E4E6; }
+.cost-tab.active {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(255,47,106,0.25);
+}
+.cost-tab-panel {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.cost-tab-panel.active {
+  display: block;
+  opacity: 1;
+}
+
+/* 3열 탭 테이블 (품목/내용/금액) */
+.cost-tab-panel .cost-table { min-width: 560px; table-layout: fixed; }
+.cost-tab-panel .cost-table col.cost-col-item { width: 15%; }
+.cost-tab-panel .cost-table col.cost-col-desc { width: 55%; }
+.cost-tab-panel .cost-table col.cost-col-amt  { width: 30%; }
+
+.cost-notes {
+  margin-top: 20px;
+  color: #555;
+  font-size: 13px;
+  line-height: 1.7;
+  word-break: keep-all;
+}
+.cost-notes p { margin-bottom: 4px; }
+
+.cost-badge {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 100px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-left: 6px;
+  vertical-align: middle;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+.cost-badge.block {
+  display: inline;
+  margin-left: 8px;
+}
+
+/* ⓘ 툴팁 */
+.tip-wrap {
+  position: relative;
+  display: inline-block;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.tip-toggle {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border-radius: 50%;
+  background: #E8E4DE;
+  color: #555;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s, color 0.2s;
+  font-family: inherit;
+  user-select: none;
+}
+.tip-toggle:hover,
+.tip-wrap.tip-open .tip-toggle { background: var(--primary); color: #fff; }
+.tip-content {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1A1A1A;
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  line-height: 1.55;
+  max-width: 200px;
+  width: max-content;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  z-index: 100;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+  text-align: left;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  white-space: normal;
+}
+.tip-content::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #1A1A1A;
+}
+.tip-wrap:hover .tip-content,
+.tip-wrap.tip-open .tip-content {
+  opacity: 1;
+  pointer-events: auto;
+}
+.cost-table-wrap.tip-host { overflow: visible; }
+
+/* ── 타사 비교 임팩트 강화 (.cost-sec.alt 한정) ── */
+.cost-sec.alt .cost-table thead th {
+  background: #EDEAE6;
+  color: #333;
+  font-weight: 700;
+}
+.cost-sec.alt .cost-table thead th.col-cg {
+  background: var(--primary);
+  color: #fff;
+}
+.cost-sec.alt .cost-table thead th.col-cg .cost-cg-star {
+  background: #fff;
+  color: var(--primary);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.18);
+}
+
+/* 총계/총개설비용 행: 카페게이트 좌우 border + 타사 숫자 흐리게 */
+.cost-sec.alt .cost-table tr.total-row .col-cg {
+  border-left: 2px solid var(--primary);
+  border-right: 2px solid var(--primary);
+}
+.cost-sec.alt .cost-table tr.total-row .col-num:not(.col-cg) {
+  color: #444;
+  font-weight: 700;
+  font-size: 14px;
+}
+.cost-sec.alt .cost-table tr.final-row .col-num:not(.col-cg) {
+  color: #999;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+/* 카페게이트 총계 숫자 강조 */
+.cost-gate-big {
+  display: block;
+  font-size: 1.4em;
+  font-weight: 900;
+  color: var(--primary);
+  line-height: 1.1;
+}
+.cost-gate-big.final {
   font-size: 18px;
   font-weight: 700;
+  color: #222;
+}
+
+.cost-lowest {
+  display: block;
+  font-size: 11px;
+  color: var(--primary);
+  font-weight: 700;
+  margin-top: 4px;
+  letter-spacing: -0.01em;
+}
+
+/* 임팩트 뱃지 (그라디언트) */
+.cost-badge.impact {
+  display: block;
+  margin: 8px auto 0;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 800;
   color: #fff;
-  margin-bottom: 3px;
+  background: linear-gradient(135deg, #FF2F6A, #FF6B9D);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(255,47,106,0.35);
+  text-align: center;
+  width: max-content;
+  max-width: 100%;
+  letter-spacing: -0.01em;
+  white-space: normal;
 }
-.case-card-profile { font-size: 16px; color: rgba(255,255,255,0.6); }
-.case-card-body { padding: 24px 28px; }
-.case-metric {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  font-size: 17px;
+
+.cost-table .col-cg {
+  background: #FFF0F4;
+  font-weight: 700;
+  color: var(--text);
 }
-.case-metric:last-of-type { border-bottom: none; }
-.case-metric-k { color: rgba(255,255,255,0.65); }
-.case-metric-v { font-weight: 700; color: rgba(255,255,255,0.85); }
-.case-metric-v.big { color: var(--primary-soft); font-size: 16px; }
-.case-quote {
-  margin-top: 16px;
-  font-size: 16.5px;
-  color: rgba(255,255,255,0.65);
-  line-height: 1.7;
-  font-style: italic;
-  padding: 14px;
-  background: rgba(255,255,255,0.03);
-  border-radius: 10px;
-  border-left: 2px solid rgba(255,47,106,0.4);
+.cost-table thead th.col-cg {
+  background: #FFF0F4;
+  color: var(--primary);
+  position: relative;
+  padding-top: 42px;
+  padding-bottom: 16px;
+  font-size: 22px;
+  text-align: center;
+  vertical-align: middle;
+}
+.cost-table tbody tr:hover td.col-cg { background: #FFE5EC; }
+.cost-table tr.total-row td.col-cg { color: var(--primary); font-size: 17px; }
+.cost-cg-star {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 100px;
+  white-space: nowrap;
+  box-shadow: 0 3px 8px rgba(255,47,106,0.3);
+}
+.cost-note-row td {
+  text-align: center;
+  color: #666;
+  font-size: 13px;
+  font-weight: 500;
+  background: #FCFBF9;
+}
+
+@media (max-width: 768px) {
+  .cost-sec { padding: 60px 0; }
+  .cost-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .cost-table-wrap.tip-host { overflow-x: auto; }
+  .cost-table { font-size: 13px; min-width: 600px; }
+  .cost-table thead th { padding: 12px 8px; font-size: 12px; }
+  .cost-table tbody td { padding: 10px 8px; }
+  .cost-table .col-desc { font-size: 12px; min-width: 180px; }
+  .cost-table .col-num { min-width: 90px; }
+  .cost-free { font-size: 15px; }
+  .cost-table tr.total-row .col-num,
+  .cost-table tr.total-row td.col-cg { font-size: 14px; }
+  .cost-badge { font-size: 10px; padding: 2px 6px; }
+  .cost-tab { padding: 10px 20px; font-size: 13px; }
+  .cost-tab-panel .cost-table { min-width: 0; width: 100%; }
+  .cost-tab-panel .cost-table thead th,
+  .cost-tab-panel .cost-table tbody td { padding: 10px 6px; }
+  .cost-tab-panel .cost-table .col-desc { min-width: 0; font-size: 12px; }
+  .cost-cg-star { font-size: 9px; padding: 2px 7px; }
 }
 
 /* ══════════════════════════════════════════
@@ -1240,44 +2031,60 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
 }
 
 /* ══════════════════════════════════════════
-   FOOTER
-══════════════════════════════════════════ */
-footer {
-  background: var(--bg-dark2);
-  padding: 52px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 32px;
-}
-.footer-logo { font-size: 16px; font-weight: 800; color: #fff; letter-spacing: 0.04em; margin-bottom: 10px; }
-.footer-logo span { color: var(--primary-soft); }
-.footer-desc { font-size: 16px; color: rgba(255,255,255,0.25); line-height: 1.8; max-width: 440px; }
-
-/* ══════════════════════════════════════════
    STICKY BOTTOM (모바일)
 ══════════════════════════════════════════ */
 @media (max-width: 768px) {
-  .nav { padding: 0 20px; }
   .wrap, .wrap-sm { padding: 0 20px; }
   section { padding: 72px 0; }
   .hero-inner { padding: 40px 20px 52px; }
   .hero-kicker { margin-top: 60px; }
   .hero-title { font-size: clamp(18px, 4.8vw, 32px); line-height: 1.35; }
   .hero-title-slider { min-height: 120px; }
-  .hero-stats-bar { grid-template-columns: 1fr 1fr; }
-  .hero-stat-item { padding: 24px 20px; }
-  .up-compare-row { grid-template-columns: 1fr auto 1fr; }
-  .up-compare-mid-arrow { transform: rotate(90deg); }
-  .up-grid, .renewal-grid, .profit-compare, .bean-compare,
+  .hero-stats-bar {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 24px;
+    padding: 20px 16px;
+  }
+  .hero-stat-item { padding: 12px 8px; }
+  .up-compare-card {
+    gap: 8px;
+    padding: 18px 12px;
+  }
+  .up-compare-brand { font-size: 11px; margin-bottom: 6px; }
+  .up-compare-price { font-size: 20px; }
+  .up-compare-price .won { font-size: 0.55em; }
+  .up-compare-mid { padding: 0 4px; gap: 2px; }
+  .up-compare-mid-num { font-size: 18px; }
+  .up-compare-mid-label { font-size: 10px; }
+
+  .compare-flow { gap: 8px; padding: 20px 16px; }
+  .up-intro-sub { font-size: 15px; }
+  .up-summary { font-size: 15px !important; }
+  .flow-icon { font-size: 26px; margin-bottom: 6px; }
+  .flow-num { font-size: 26px; }
+  .flow-unit { font-size: 10px; margin: 4px 0 6px; letter-spacing: 0.08em; }
+  .flow-desc { font-size: 10px; line-height: 1.35; }
+  .flow-arrow { font-size: 22px; }
+  .flow-equal { font-size: 18px; }
+  .flow-equal-sub { font-size: 10px; line-height: 1.35; }
+  .up-grid, .renewal-grid, .profit-compare,
   .form-layout, .interior-text { grid-template-columns: 1fr; }
+  .bean-compare { grid-template-columns: 1fr 1fr; }
+  .bean-col { padding: 24px 12px 64px; }
+  .bean-col img {
+    width: auto !important;
+    height: 100px !important;
+    max-width: 100%;
+    object-fit: contain;
+    margin: 0 auto !important;
+  }
+  .bean-col-tag { font-size: 13px; letter-spacing: 0.06em; margin-bottom: 14px; }
+  .bean-price { font-size: 22px; }
+  .bean-price-sub { font-size: 13px; }
+  .bean-diff-badge { font-size: 12px; padding: 8px 14px; bottom: 18px; }
   .strength-item, .strength-item.reverse { grid-template-columns: 1fr; direction: ltr; }
   .trust-grid { grid-template-columns: 1fr 1fr; }
-  .cases-grid { grid-template-columns: 1fr; }
   .interior-sub-imgs { grid-template-columns: repeat(3, 1fr); }
-  footer { flex-direction: column; padding: 40px 20px; }
-  .rocket-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
-  .rocket-arrow { display: none !important; }
   .sales-scroll { padding: 8px 20px 16px; margin: 0 -20px; }
 }
 
@@ -1293,12 +2100,6 @@ footer {
 </style>
 </head>
 <body>
-
-<!-- NAV -->
-<nav class="nav">
-  <div class="nav-logo">CAFE<span>GATE</span></div>
-  <a href="#form" class="nav-cta">무료 창업 상담</a>
-</nav>
 
 <!-- ══ 01. HERO ══ -->
 <section class="hero" style="padding:0;">
@@ -1342,7 +2143,7 @@ footer {
       커피와 샌드위치로 증명된 성공모델입니다.
     </p>
     <div class="hero-btns">
-      <a href="#form" class="btn-main">지금 무료 상담 신청</a>
+      <a href="#form" class="btn-main">무료 창업상담 신청</a>
       
     </div>
   </div>
@@ -1356,7 +2157,7 @@ footer {
       <div class="h-stat-label">객단가 상승</div>
     </div>
     <div class="hero-stat-item">
-      <div class="h-stat-num">5,600<span class="u">만</span></div>
+      <div class="h-stat-num">5,700<span class="u">만</span></div>
       <div class="h-stat-label">창업비 (10평)</div>
     </div>
     <div class="hero-stat-item">
@@ -1376,56 +2177,73 @@ footer {
     <!-- 하단 그라디언트 -->
     <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(17,17,17,0.85) 0%, rgba(17,17,17,0.3) 50%, transparent 100%);"></div>
     <!-- 텍스트 오버레이 -->
-    <div style="position:absolute;bottom:0;left:0;right:0;padding:32px 28px;">
-      <div style="font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--primary-soft);margin-bottom:10px;">객단가 레버리지</div>
-      <h2 style="font-size:clamp(28px,6vw,48px);font-weight:800;color:#fff;letter-spacing:-0.04em;line-height:1.2;margin-bottom:8px;">객단가 <span style="color:var(--primary-soft);">267%</span>의<br>놀라운 상승</h2>
-      <p style="font-size:15px;color:rgba(255,255,255,0.72);line-height:1.6;">인건비는 그대로, 손님 1명당 결제액은 쑥.<br>뚝심 있는 사장님만 아는 '객단가 레버리지'의 비밀.</p>
+    <div class="unitprice-overlay" style="position:absolute;bottom:0;left:0;right:0;">
+      <div class="unitprice-overlay-inner">
+        <div style="font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--primary-soft);margin-bottom:10px;">객단가 레버리지</div>
+        <h2 style="font-size:clamp(28px,6vw,48px);font-weight:800;color:#fff;letter-spacing:-0.04em;line-height:1.2;margin-bottom:8px;">객단가 <span style="color:var(--primary-soft);">267%</span>의<br>놀라운 상승</h2>
+        <p style="font-size:15px;color:rgba(255,255,255,0.72);line-height:1.6;">인건비는 그대로, 손님 1명당 결제액은 쑥.<br>뚝심 있는 사장님만 아는 '객단가 레버리지'의 비밀.</p>
+      </div>
     </div>
   </div>
 
   <!-- 가격 비교 + 컵/세트 카드 -->
-  <div style="padding:28px 20px 40px;background:var(--bg-white);">
+  <div style="padding:70px 20px 70px;background:var(--bg-white);">
 
-    <!-- 2.7배 비교 카드 -->
-    <div class="up-compare-row reveal" style="margin-bottom:12px;">
+    <!-- 인트로 텍스트 -->
+    <div class="up-intro reveal">
+      <h3 class="up-intro-title">매출은 자리가 만들고, 수익은 구조가 만듭니다.<br>우리는 '이기는 구조'에서 오픈합니다.</h3>
+      <p class="up-intro-sub">동일한 매출이라도 순수익이 10% 더 높은 이유,<br>카페게이트의 <span class="accent">'정교한 손익 설계'</span>에 있습니다.</p>
+    </div>
+
+    <!-- 객단가 가격 비교 카드 -->
+    <div class="up-compare-card reveal">
       <div class="up-compare-col">
         <div class="up-compare-brand">저가 커피프랜차이즈</div>
-        <div class="up-compare-price" style="font-size:clamp(20px,3vw,32px);color:var(--text-sub);">2,390<span class="won" style="font-size:0.55em;">원</span></div>
+        <div class="up-compare-price">2,390<span class="won">원</span></div>
       </div>
       <div class="up-compare-mid">
-        <div class="up-compare-mid-num" style="font-size:clamp(28px,4.2vw,50px);font-weight:700;color:var(--primary);letter-spacing:-0.03em;line-height:1;">2.7배</div>
-        <div class="up-compare-mid-label" style="font-size:14px;color:var(--text-sub);margin-top:4px;">객단가 상승</div>
+        <div class="up-compare-mid-num">2.7배 ↑</div>
+        <div class="up-compare-mid-label">객단가 상승</div>
       </div>
       <div class="up-compare-col right">
-        <div class="up-compare-brand">카페게이트<br>샌드위치 &amp; 커피바</div>
-        <div class="up-compare-price" style="font-size:clamp(20px,3vw,32px);">7,430<span class="won" style="font-size:0.55em;">원</span></div>
+        <div class="up-compare-brand">카페게이트 샌드위치 &amp; 커피바</div>
+        <div class="up-compare-price">7,430<span class="won">원</span></div>
       </div>
     </div>
 
-    <!-- 100CUPS / 동일매출 / 28SETS -->
-    <div class="up-cups-row reveal">
-      <div class="up-cups-col">
-        <img src="https://cafegate-homepage.vercel.app/images/franchise/cups.png"
-             alt="100 cups" style="width:100%;max-width:120px;margin:0 auto 10px;display:block;opacity:0.5;">
-        <div class="up-cups-num" style="color:var(--text-sub);font-size:36px;">100</div>
-        <div class="up-cups-unit" style="font-size:16px;">CUPS</div>
-        <div class="up-cups-desc">저가 커피프랜차이즈<br><strong>아메리카노 100잔 판매시</strong></div>
+    <!-- 100 CUPS / 동일매출 / 28 SETS 플로우 -->
+    <div class="compare-flow reveal">
+      <!-- 왼쪽: 100 CUPS -->
+      <div class="flow-item">
+        <span class="flow-icon">☕</span>
+        <div class="flow-num">100</div>
+        <div class="flow-unit">CUPS</div>
+        <div class="flow-desc">아메리카노 100잔 판매시</div>
       </div>
-      <div class="up-cups-col mid">
-        <div style="font-size:clamp(20px,2.8vw,34px);font-weight:700;color:var(--primary);letter-spacing:-0.03em;line-height:1.2;margin-bottom:6px;">동일<br>매출</div>
-        <div style="font-size:14px;color:var(--text-sub);line-height:1.5;text-align:center;">1/4 판매량으로<br>같은 매출</div>
+
+      <!-- 화살표 → -->
+      <div class="flow-arrow">→</div>
+
+      <!-- 가운데: 동일매출 -->
+      <div class="flow-center">
+        <div class="flow-equal">동일매출</div>
+        <div class="flow-equal-sub">1/4 판매량으로 같은 매출</div>
       </div>
-      <div class="up-cups-col right">
-        <img src="https://cafegate-homepage.vercel.app/images/franchise/sandwich_cup.png"
-             alt="28 sets" style="width:100%;max-width:120px;margin:0 auto 10px;display:block;">
-        <div class="up-cups-num" style="font-size:36px;">28</div>
-        <div class="up-cups-unit" style="font-size:16px;">SETS</div>
-        <div class="up-cups-desc">카페게이트 샌드위치 &amp; 커피바<br><strong>샌드위치 세트 28개 판매시</strong></div>
+
+      <!-- 화살표 ← -->
+      <div class="flow-arrow">←</div>
+
+      <!-- 오른쪽: 28 SETS -->
+      <div class="flow-item">
+        <span class="flow-icon">🥪</span>
+        <div class="flow-num" style="color:#FF2F6A">28</div>
+        <div class="flow-unit">SETS</div>
+        <div class="flow-desc">샌드위치 세트 28개 판매시</div>
       </div>
     </div>
 
     <!-- 하단 요약 -->
-    <p class="up-summary" style="margin-top:24px;font-size:15px;text-align:left;color:#444;line-height:1.8;word-break:keep-all;">
+    <p class="up-summary" style="margin:24px auto 0;font-size:19px;text-align:center;color:#444;line-height:1.8;word-break:keep-all;white-space:normal;max-width:680px;">
       최소 인력의 효율은 지키면서, 결제액은 2배로 올리는 수익 다각화 전략으로 다른 매장이 텅 빌 때 카페게이트는 '식사 대용 손님'으로 두 번째 피크를 맞이합니다.
     </p>
 
@@ -1568,10 +2386,10 @@ footer {
     <h2 class="section-title">매일 먹어도 맛있는,<br>커피와 샌드위치</h2>
 
     <!-- 1 -->
-    <div class="strength-item reveal">
+    <div class="strength-item stacked reveal">
       <div>
         <div class="strength-num">01 — 365일 하루 3번 먹는 메뉴</div>
-        <h3 class="strength-title">커피 & 샌드위치,<br>끊이지 않는 선택</h3>
+        <h3 class="strength-title" style="white-space:nowrap;">커피 &amp; 샌드위치, 끊이지 않는 선택</h3>
         <p class="strength-desc">트렌디한 메뉴와 다양한 음료. 자발적인 입소문이 나는 메뉴 구성으로 매일 찾아오게 만듭니다. 포장·배달·테이크아웃으로 매출 극대화.</p>
       </div>
       <div class="strength-img-grid">
@@ -1581,34 +2399,34 @@ footer {
         <div class="strength-img">
           <img src="https://cafegate-homepage.vercel.app/_next/image?url=%2Fimages%2Ffranchise%2Fcg_fran_03.jpg&w=828&q=75" alt="카페게이트 샌드위치" loading="lazy">
         </div>
-        <div class="strength-img" style="grid-column:span 2; border-radius:0; background:#F7F5F2;">
-          <img src="./bagel_sandwich.png" alt="베이글 샌드위치" loading="lazy" style="object-fit:contain; width:100%; height:auto; display:block;">
+        <div class="strength-img">
+          <img src="./bagel_sandwich.png" alt="베이글 샌드위치" loading="lazy">
         </div>
       </div>
     </div>
 
-    <!-- 2 -->
-    <div class="strength-item reverse reveal">
+    <!-- 2 스페셜티 원두 & 시그니처 라떼 -->
+    <div class="strength-item stacked reveal">
       <div>
-        <div class="strength-num">02 — 고품질 스페셜티 원두</div>
-        <h3 class="strength-title">타협없는 퀄리티,<br>스페셜티 원두</h3>
-        <p class="strength-desc">BSCA 등급의 스페셜티 원두. 한국인이 좋아하는 바디감과 산미, 밸런스가 좋은 원두로 안정된 품질과 고객에게 사랑받는 커피의 퀄리티입니다.</p>
+        <div class="strength-num">02 — 스페셜티 원두 &amp; 시그니처 라떼</div>
+        <h3 class="strength-title" style="white-space:nowrap;">타협없는 퀄리티, 커피 경쟁력의 두 기둥</h3>
+        <p class="strength-desc">BSCA 등급의 스페셜티 원두와 게이트만의 시그니처 크림 라떼.<br>안정된 품질과 스테디셀러 메뉴로 매일 매출을 만들어냅니다.</p>
       </div>
-      <div class="strength-img" style="aspect-ratio:unset;border-radius:6px;max-height:300px;height:300px;">
-        <img src="https://cafegate-homepage.vercel.app/_next/image?url=%2Fimages%2Ffranchise%2Fspecialty_coffee_left.png&w=1200&q=75" alt="스페셜티 원두" loading="lazy" style="object-fit:contain;padding:8px;background:#F7F5F2;height:100%;">
-      </div>
-    </div>
-
-    <!-- 2-2 시그니처 라떼 -->
-    <div class="strength-item reverse reveal">
-      <div>
-        <div class="strength-num">02-2 — 시그니처 라떼</div>
-        <h3 class="strength-title">1분에 1잔씩 팔리는<br>스테디셀러!</h3>
-        <p class="strength-desc">베이커리와의 조화를 최대치로 끌어올릴 수 있게 블렌딩한 올데이라떼와 시그니처 크림으로 만든 게이트만의 스페셜라떼로 매출 UP!</p>
-        <p class="strength-desc" style="margin-top:12px;font-style:italic;color:var(--primary);font-weight:600;">Signature Latte</p>
-      </div>
-      <div style="border-radius:6px;overflow:hidden;background:#F7F5F2;">
-        <img src="./latte_signature.png" alt="시그니처 라떼" loading="lazy" style="width:100%;height:auto;display:block;object-fit:contain;">
+      <div class="strength-duo">
+        <div class="strength-duo-item">
+          <div class="strength-duo-img">
+            <img src="https://cafegate-homepage.vercel.app/_next/image?url=%2Fimages%2Ffranchise%2Fspecialty_coffee_left.png&w=1200&q=75" alt="스페셜티 원두" loading="lazy">
+          </div>
+          <h4 class="strength-duo-title">고품질 스페셜티 원두</h4>
+          <p class="strength-duo-desc">BSCA 등급의 스페셜티 원두. 한국인이 좋아하는 바디감과 산미, 밸런스가 좋은 원두로 안정된 품질과 고객에게 사랑받는 커피의 퀄리티입니다.</p>
+        </div>
+        <div class="strength-duo-item">
+          <div class="strength-duo-img">
+            <img src="./latte_signature.png" alt="시그니처 라떼" loading="lazy">
+          </div>
+          <h4 class="strength-duo-title">1분에 1잔씩 팔리는 스테디셀러</h4>
+          <p class="strength-duo-desc">베이커리와의 조화를 최대치로 끌어올릴 수 있게 블렌딩한 올데이라떼와 시그니처 크림으로 만든 게이트만의 스페셜라떼로 매출 UP!</p>
+        </div>
       </div>
     </div>
 
@@ -1616,7 +2434,7 @@ footer {
     <div class="strength-item reveal">
       <div>
         <div class="strength-num">03 — 포장·배달·테이크아웃</div>
-        <h3 class="strength-title">모든 채널로<br>매출 극대화</h3>
+        <h3 class="strength-title" style="white-space:nowrap;">모든 채널로 매출 극대화</h3>
         <p class="strength-desc">커피 한 잔과 함께 샌드위치 포장주문도 UP! 주말 아침 브런치, 평일 저녁 가벼운 식사로 끊임없는 배달 주문이 이어집니다.</p>
       </div>
       <div class="strength-img" style="aspect-ratio:4/3;border-radius:6px;">
@@ -1670,7 +2488,7 @@ footer {
         </div>
       </div>
     </div>
-    <p style="font-size: 16px;color:rgba(255,255,255,0.25);margin-top:16px;line-height:1.7;">※ 기타잡비: 카드수수료, 로열티, 보험료, 세무기장비, 통신비, 세콤 등. 위 표는 서울 D점 총 매출액에 근거한 데이터이며 상권 특성, 경기 변화, 평수, 점주 역량 등에 따라 변화할 수 있습니다.</p>
+    <p style="font-size: 16px;color:#AAAAAA;margin-top:16px;line-height:1.7;">※ 기타잡비: 카드수수료, 로열티, 보험료, 세무기장비, 통신비, 세콤 등. 위 표는 서울 D점 총 매출액에 근거한 데이터이며 상권 특성, 경기 변화, 평수, 점주 역량 등에 따라 변화할 수 있습니다.</p>
   </div>
 </section>
 
@@ -1759,88 +2577,108 @@ footer {
 
 <div class="divider"></div>
 
-<!-- ══ 08. 원두 경쟁력 ══ -->
+<!-- ══ 08. 원가 경쟁력 ══ -->
 <section class="bean">
   <div class="wrap">
-    <div class="eyebrow">압도적 원가 경쟁력</div>
-    <h2 class="section-title">원두 납품가의<br>차이가 수익을 만듭니다</h2>
-    <p class="section-desc">카페 원가율에 가장 큰 비중을 차지하는 원두 가격. 카페게이트가 다른 이유입니다.</p>
+    <div class="eyebrow">원가 경쟁력</div>
+    <h2 class="section-title">압도적인<br>원가 경쟁력</h2>
+    <p class="section-desc">카페게이트는 원두 납품가와 물류 효율, 두 축으로 원가를 잡습니다.</p>
 
-    <!-- 원두 가격 비교 -->
-    <div class="bean-compare reveal">
-      <div class="bean-col">
-        <div class="bean-col-tag">타사 원두가격</div>
-        <img src="https://cafegate-homepage.vercel.app/_next/image?url=%2Fimages%2Ffranchise%2F%EC%9B%90%EB%91%90%EC%9D%B4%EB%AF%B8%EC%A7%80.png&w=384&q=75"
-             alt="타사 원두" style="width:120px;margin:16px auto;display:block;opacity:0.5;">
-        <div class="bean-price">2만원<br>초·중반대</div>
-        <div class="bean-price-sub">/kg</div>
+    <div class="pillars">
+
+      <!-- 축 1: 원두 납품가 -->
+      <div class="pillar reveal">
+        <div class="pillar-num">Pillar 01</div>
+        <h3 class="pillar-title">원두 납품가의 차이가 수익을 만듭니다</h3>
+        <p class="pillar-desc">카페 원가율에 가장 큰 비중을 차지하는 원두 가격. 카페게이트가 다른 이유입니다.</p>
+        <div class="bean-compare">
+          <div class="bean-col" style="background:#F7F5F2 !important;">
+            <div class="bean-col-tag">타사 원두가격</div>
+            <div class="bean-img-wrap">
+              <img src="./타브랜드원두.png"
+                   alt="타사 원두" style="width:120px;display:block;background:#F7F5F2 !important;border:none !important;outline:none !important;">
+            </div>
+            <div class="bean-price-wrap">
+              <div class="bean-price" style="white-space:nowrap;">2만원 초·중반대</div>
+              <div class="bean-price-sub">/kg</div>
+            </div>
+          </div>
+          <div class="bean-col ours">
+            <div class="bean-col-tag">카페게이트 — 상위 스페셜티</div>
+            <div class="bean-img-wrap">
+              <img src="./원두이미지2.png"
+                   alt="카페게이트 원두" style="width:150px;display:block;background:transparent !important;border:none !important;outline:none !important;">
+            </div>
+            <div class="bean-price-wrap">
+              <div class="bean-price">1만원대</div>
+              <div class="bean-price-sub">/kg · 상위 스페셜티</div>
+            </div>
+            <div class="bean-diff-badge">재료비 부담 26% 감소 ↓</div>
+          </div>
+        </div>
       </div>
-      <div class="bean-col ours">
-        <div class="bean-col-tag">카페게이트 — 상위 스페셜티</div>
-        <img src="https://cafegate-homepage.vercel.app/_next/image?url=%2Fimages%2Ffranchise%2F%EC%9B%90%EB%91%90%EC%9D%B4%EB%AF%B8%EC%A7%80.png&w=640&q=75"
-             alt="카페게이트 원두" style="width:150px;margin:16px auto;display:block;">
-        <div class="bean-price">1만원대</div>
-        <div class="bean-price-sub" style="color:rgba(255,255,255,0.4);">/kg · 상위 스페셜티</div>
-        <div class="bean-diff-badge">재료비 부담 26% 감소 ↓</div>
+
+      <!-- 축 2: 주 6회 로켓 물류 -->
+      <div class="pillar rocket-pillar reveal">
+        <div class="pillar-num">Pillar 02</div>
+        <h3 class="pillar-title">주 6회 로켓 물류</h3>
+
+        <!-- 상단 혜택 3개 -->
+        <div class="rocket-benefits">
+          <div class="rocket-benefit">
+            <div class="rocket-benefit-kicker">납품가 방어!</div>
+            <div class="rocket-benefit-title">낮은 원가율</div>
+          </div>
+          <span class="rocket-plus-badge" aria-hidden="true">+</span>
+          <div class="rocket-benefit">
+            <div class="rocket-benefit-kicker">다음날 로켓배송!</div>
+            <div class="rocket-benefit-title">매일 낭비 없는<br>재고 관리</div>
+          </div>
+          <span class="rocket-plus-badge" aria-hidden="true">+</span>
+          <div class="rocket-benefit">
+            <div class="rocket-benefit-kicker">홀 테이블 추가 확보!</div>
+            <div class="rocket-benefit-title">재고 적재 최소화</div>
+          </div>
+        </div>
+
+        <!-- 하단 물류 플로우 -->
+        <div class="rocket-flow">
+          <div class="rocket-flow-step">
+            <div class="rocket-flow-img">
+              <img src="./물류1.png" alt="물류센터">
+            </div>
+            <div class="rocket-flow-label">원자재 및 물류 입고</div>
+          </div>
+
+          <div class="rocket-flow-arrow">→</div>
+
+          <div class="rocket-flow-step rocket-flow-truck">
+            <div class="rocket-flow-badge">주 6회 배송</div>
+            <div class="rocket-flow-img">
+              <img src="./물류2.png" alt="CAFE GATE 트럭">
+            </div>
+            <div class="rocket-flow-label">통합물류 시스템</div>
+          </div>
+
+          <div class="rocket-flow-arrow rocket-flow-arrow-split">
+            <span>↗</span>
+            <span>→</span>
+            <span>↘</span>
+          </div>
+
+          <div class="rocket-flow-stores">
+            <img src="./물류3.png" alt="매장">
+            <div class="rocket-flow-label">매장 수령</div>
+          </div>
+        </div>
       </div>
+
     </div>
 
-    <!-- 주 6회 로켓 물류 -->
-    <div style="margin-top:48px;">
-      <div style="text-align:center;margin-bottom:24px;">
-        <span style="font-size:18px;font-weight:800;color:var(--primary);letter-spacing:-0.02em;">주 6회 로켓 물류</span>
-      </div>
-      <div style="background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px 24px;">
-        <div class="rocket-grid" style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:8px;align-items:center;">
-
-          <!-- 1단계 -->
-          <div style="text-align:center;">
-            <div style="font-size:13px;color:var(--primary);font-weight:700;margin-bottom:4px;">납품가 방어!</div>
-            <div style="font-size:15px;font-weight:800;color:var(--text);margin-bottom:16px;">낮은 원가율</div>
-            <img src="https://cafegate-homepage.vercel.app/images/franchise/rocket_1.png" alt="원자재 및 물류 입고"
-                 style="width:100%;max-width:120px;margin:0 auto;display:block;">
-            <div style="font-size:13px;color:var(--text-sub);margin-top:10px;">원자재 및 물류 입고</div>
-          </div>
-
-          <!-- 화살표+플러스 1 -->
-          <div class="rocket-arrow" style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px;">
-            <img src="https://cafegate-homepage.vercel.app/images/franchise/SVG/rocket_plus.svg" style="width:20px;">
-            <img src="https://cafegate-homepage.vercel.app/images/franchise/SVG/rocket_arrow_1.svg" style="width:32px;">
-          </div>
-
-          <!-- 2단계 -->
-          <div style="text-align:center;">
-            <div style="font-size:13px;color:var(--primary);font-weight:700;margin-bottom:4px;">다음날 로켓 배송!</div>
-            <div style="font-size:15px;font-weight:800;color:var(--text);margin-bottom:16px;">매일 낭비 없는 재고 관리</div>
-            <img src="https://cafegate-homepage.vercel.app/images/franchise/rocket_2.png" alt="통합물류 시스템"
-                 style="width:100%;max-width:120px;margin:0 auto;display:block;">
-            <div style="font-size:13px;color:var(--text-sub);margin-top:10px;">통합물류 시스템</div>
-          </div>
-
-          <!-- 화살표+플러스 2 -->
-          <div class="rocket-arrow" style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px;">
-            <img src="https://cafegate-homepage.vercel.app/images/franchise/SVG/rocket_plus.svg" style="width:20px;">
-            <img src="https://cafegate-homepage.vercel.app/images/franchise/SVG/rocket_arrow_2.svg" style="width:32px;">
-          </div>
-
-          <!-- 3단계 -->
-          <div style="text-align:center;">
-            <div style="font-size:13px;color:var(--primary);font-weight:700;margin-bottom:4px;">홀 테이블 추가 확보!</div>
-            <div style="font-size:15px;font-weight:800;color:var(--text);margin-bottom:16px;">재고 적재 최소화</div>
-            <img src="https://cafegate-homepage.vercel.app/images/franchise/rocket_3.png" alt="매장 수령"
-                 style="width:100%;max-width:120px;margin:0 auto;display:block;">
-            <div style="font-size:13px;color:var(--text-sub);margin-top:10px;">매장 수령</div>
-          </div>
-
-        </div>
-
-        <!-- 결과 배지 -->
-        <div style="text-align:center;margin-top:28px;">
-          <span style="display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:#fff;font-size:17px;font-weight:800;padding:12px 28px;border-radius:100px;letter-spacing:-0.01em;">
-            🚀 가맹점 수익 극대화!
-          </span>
-        </div>
-      </div>
+    <!-- 결론 -->
+    <div class="pillars-conclusion reveal">
+      <div class="pillars-arrow">↓</div>
+      <div class="pillars-result">🚀 가맹점 수익 극대화</div>
     </div>
 
   </div>
@@ -1866,6 +2704,28 @@ footer {
       <div class="interior-sub-img"><img src="https://cafegate-homepage.vercel.app/_next/image?url=%2Fimages%2Ffranchise%2Finterior_3.jpg&w=828&q=75" alt="" loading="lazy"></div>
       <div class="interior-sub-img"><img src="https://cafegate-homepage.vercel.app/_next/image?url=%2Fimages%2Ffranchise%2Finterior_4.jpg&w=828&q=75" alt="" loading="lazy"></div>
       <div class="interior-sub-img"><img src="https://cafegate-homepage.vercel.app/_next/image?url=%2Fimages%2Ffranchise%2Finterior_5.jpg&w=828&q=75" alt="" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ 09-2. 교육과 오픈 지원 ══ -->
+<section class="education">
+  <div class="wrap">
+    <div class="eyebrow">본사 지원</div>
+    <h2 class="section-title">첫 창업도 OK!<br>교육과 오픈 지원</h2>
+    <p class="section-desc">첫 창업이라도 자신 있게 오픈 할 수 있도록 커피 이론, 제조 교육 뿐만 아니라 마케팅 &amp; 재무 교육까지 실제 운영에 필요한 내용과 노하우를 알려드립니다.</p>
+
+    <div class="education-grid reveal">
+      <div class="education-img">
+        <img src="./교육이미지.png" alt="카페게이트 교육 현장" loading="lazy">
+      </div>
+      <div class="education-text">
+        <h3 class="education-headline">교육만 들어서 가능할까?<br>두려운 점주님, 걱정마세요.</h3>
+        <p>신규 매장 오픈하면 오픈 전문 슈퍼바이저님들이 밀착하여 도와드립니다.</p>
+        <p>카페게이트 가맹점은 본사와 함께 안정적 성공을 이루어갑니다.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -1898,52 +2758,414 @@ footer {
   </div>
 </section>
 
-<!-- ══ 11. 실매장 사례 ══ -->
-<section class="cases">
+<!-- ══ 11. 점주 스토리 ══ -->
+<section class="owner-stories">
   <div class="wrap">
-    <div class="eyebrow" style="color:var(--primary-soft);">실매장 사례</div>
-    <h2 class="section-title">실제 점주들의<br>실제 숫자입니다</h2>
-    <p class="section-desc">예상 수익이 아닙니다. 지금 이 시각도 운영 중인 카페게이트 매장의 실적 데이터입니다.</p>
-    <div class="cases-grid">
-      <div class="case-card reveal">
-        <div class="case-card-top">
-          <div class="case-card-type">수익형 · 역세권 상권</div>
-          <div class="case-card-name">파주금촌역점</div>
-          <div class="case-card-profile">역세권 상권 · 12평 운영</div>
-        </div>
-        <div class="case-card-body">
-          <div class="case-metric"><span class="case-metric-k">월 매출</span><span class="case-metric-v">4,790만원</span></div>
-          <div class="case-metric"><span class="case-metric-k">월 순수익</span><span class="case-metric-v big">2,735만원</span></div>
-          <div class="case-metric"><span class="case-metric-k">순수익률</span><span class="case-metric-v">57.1%</span></div>
-          <div class="case-quote">"역세권 유동인구와 샌드위치바 조합이 맞아 떨어졌습니다. 음료만 팔 때보다 객단가가 확실히 달라졌어요."</div>
-        </div>
+    <div class="eyebrow" style="color:var(--primary-soft);">점주 스토리</div>
+    <h2 class="section-title" style="color:#1a1a1a;">점주님이 인정하는 브랜드</h2>
+    <p class="section-desc" style="color:#666;">이미 오랜기간 운영하시고, 추가 오픈까지 진행하는 점주님들의 스토리</p>
+
+    <!-- 피처드 카드 (1번 영상) -->
+    <div class="owner-featured reveal">
+      <div class="owner-featured-img">
+        <img src="https://img.youtube.com/vi/RxvBUE6hMQs/maxresdefault.jpg" alt="작전역점·효성점 점주" style="width:100%;height:100%;object-fit:cover;">
       </div>
-      <div class="case-card reveal">
-        <div class="case-card-top">
-          <div class="case-card-type">안전형 · 신도시 주거 상권</div>
-          <div class="case-card-name">검단예미지점</div>
-          <div class="case-card-profile">신도시 아파트 상권 · 카페 무경험</div>
-        </div>
-        <div class="case-card-body">
-          <div class="case-metric"><span class="case-metric-k">전국 이익률 순위</span><span class="case-metric-v">5위</span></div>
-          <div class="case-metric"><span class="case-metric-k">월 이익률</span><span class="case-metric-v big">51.8%</span></div>
-          <div class="case-metric"><span class="case-metric-k">창업 전 경력</span><span class="case-metric-v">카페 무경험</span></div>
-          <div class="case-quote">"교육 이후 3개월 만에 안정권 진입했습니다. 주거 상권이라 단골이 빨리 생겼어요."</div>
-        </div>
+      <div class="owner-featured-body">
+        <div class="owner-featured-tag">다점포 운영</div>
+        <div class="owner-featured-title">작전역 오픈하고<br>인천효성점까지</div>
+        <div class="owner-featured-quote">"본사가 가맹점과 상생하려는 마음이 느껴져서 카페게이트를 선택했어요. 한 매장이 안정되니 자연스럽게 2호점을 열고 싶어졌고, 본사 지원 덕분에 부담 없이 도전할 수 있었습니다."</div>
+        <div class="owner-featured-from">— 작전역점·효성점 운영 점주</div>
+        <a class="owner-featured-link" href="https://www.youtube.com/watch?v=RxvBUE6hMQs" target="_blank">영상 보기 →</a>
       </div>
-      <div class="case-card reveal">
-        <div class="case-card-top">
-          <div class="case-card-type">실속형 · 리뉴얼 도입</div>
-          <div class="case-card-name">신월점</div>
-          <div class="case-card-profile">리뉴얼 도입 사례 · 10평 소형</div>
+    </div>
+
+    <!-- 영상 리스트 -->
+    <div class="owner-list">
+      <a class="owner-item reveal" href="https://www.youtube.com/watch?v=PTWpo4YDAwU" target="_blank">
+        <div class="owner-thumb">
+          <img src="https://img.youtube.com/vi/PTWpo4YDAwU/mqdefault.jpg" alt="광명점 점주 영상" loading="lazy">
         </div>
-        <div class="case-card-body">
-          <div class="case-metric"><span class="case-metric-k">리뉴얼 전 월매출</span><span class="case-metric-v">3,141만원</span></div>
-          <div class="case-metric"><span class="case-metric-k">리뉴얼 후 월매출</span><span class="case-metric-v big">4,459만원</span></div>
-          <div class="case-metric"><span class="case-metric-k">매출 상승률</span><span class="case-metric-v" style="color:#6EDFA4;font-size:16px;">+40%</span></div>
-          <div class="case-quote">"샌드위치바 도입 후 점심 타임 매출이 완전히 달라졌습니다."</div>
+        <div class="owner-item-body">
+          <div class="owner-item-title">작은 평수로 시작한 장사에 진심인 여사장님</div>
+          <div class="owner-item-desc">"교육청, 관공서, 어린이집에서 와플·빵·커피 단체주문이 진짜 많아요. 돈만 쫓지 말고 최선을 다하면, 하는 만큼 돌아옵니다."</div>
+          <div class="owner-item-from">— 광명점 운영 점주</div>
         </div>
+      </a>
+      <a class="owner-item reveal" href="https://www.youtube.com/watch?v=G17Zn5ul5Ms" target="_blank">
+        <div class="owner-thumb">
+          <img src="https://img.youtube.com/vi/G17Zn5ul5Ms/mqdefault.jpg" alt="고양시 점주 영상" loading="lazy">
+        </div>
+        <div class="owner-item-body">
+          <div class="owner-item-title">매일 커피 400잔 이상 파는, 여사장님</div>
+          <div class="owner-item-desc">"지금 생각하면 좀 더 일찍 시작할 것 같아요. 모든 주부님들, 충분히 가능합니다. 자신감 있게 도전해 보세요."</div>
+          <div class="owner-item-from">— 고양시 운영 점주</div>
+        </div>
+      </a>
+      <a class="owner-item reveal" href="https://www.youtube.com/watch?v=2iKogsf94zk" target="_blank">
+        <div class="owner-thumb">
+          <img src="https://img.youtube.com/vi/2iKogsf94zk/mqdefault.jpg" alt="고려대역점 점주 영상" loading="lazy">
+        </div>
+        <div class="owner-item-body">
+          <div class="owner-item-title">편의점을 운영하던 사장님이 카페게이트를 선택한 이유</div>
+          <div class="owner-item-desc">"월매출 2,500~3,000만 원, 순수익 최대 1,000~1,200만 원. 생각했던 것보다 더 나왔고, 금전적으로 여유도 생겼습니다."</div>
+          <div class="owner-item-from">— 고려대역점 운영 점주</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 11-2. 개설비용 테이블 ══ -->
+<section class="cost-sec">
+  <div class="wrap">
+    <div class="eyebrow">개설비용 구조</div>
+    <h2 class="cost-title">
+      <span class="brown">어떤 브랜드 보다도,</span><br>
+      <span class="pink">가장 합리적인 개설구조</span>
+    </h2>
+    <p class="cost-desc">인테리어 완성도, 분위기는 강화하고,<br>초기 개설비는 700~3,000만원까지 낮췄습니다.</p>
+
+    <!-- 평수 탭 -->
+    <div class="cost-tabs" role="tablist">
+      <button type="button" class="cost-tab active" data-size="10" role="tab" aria-selected="true">10평</button>
+      <button type="button" class="cost-tab" data-size="15" role="tab" aria-selected="false">15평</button>
+      <button type="button" class="cost-tab" data-size="20" role="tab" aria-selected="false">20평</button>
+    </div>
+
+    <!-- 10평 -->
+    <div class="cost-tab-panel active" data-panel="10" role="tabpanel">
+      <div class="cost-table-wrap">
+        <table class="cost-table">
+          <colgroup>
+            <col class="cost-col-item">
+            <col class="cost-col-desc">
+            <col class="cost-col-amt">
+          </colgroup>
+          <thead>
+            <tr>
+              <th>품목</th>
+              <th>내용</th>
+              <th>금액 (10평 기준)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-item">가맹비</td>
+              <td class="col-desc">상표권 부여, 영업권 보장, 운영 노하우</td>
+              <td class="col-num"><span class="cost-strike">500만원</span> <span class="cost-free">0원</span></td>
+            </tr>
+            <tr>
+              <td class="col-item">교육비</td>
+              <td class="col-desc">가맹점 운영에 관한 이론 및 실습교육</td>
+              <td class="col-num"><span class="cost-strike">500만원</span> <span class="cost-free">0원</span></td>
+            </tr>
+            <tr>
+              <td class="col-item">오픈홍보</td>
+              <td class="col-desc">오픈이벤트 진행 및 현수막, 배너 등 홍보물 제공</td>
+              <td class="col-num"><span class="cost-strike">350만원</span> <span class="cost-free">0원</span></td>
+            </tr>
+            <tr>
+              <td class="col-item">장비 &amp; 설비</td>
+              <td class="col-desc">커피머신, 그라인더, 핫워터, 냉장 &amp; 냉동고, 제빙기, 블랜더, 세정대, 온수기, 디퍼웰, 작업테이블, 오븐, 오븐랙, DID 3대</td>
+              <td class="col-num"><span class="cost-strike">3,300만원</span><br><span class="cost-new">2,900만원</span><span class="cost-diff">−300만원</span></td>
+            </tr>
+            <tr>
+              <td class="col-item">인테리어</td>
+              <td class="col-desc">최소 10py 공사비용 발생</td>
+              <td class="col-num">1,700만원</td>
+            </tr>
+            <tr>
+              <td class="col-item">설계/감리비</td>
+              <td class="col-desc">도면 설계 및 감리비용</td>
+              <td class="col-num">300만원</td>
+            </tr>
+            <tr>
+              <td class="col-item">간판/사인물</td>
+              <td class="col-desc">전면 간판 (4m 기준), 내외부 사인물 일체</td>
+              <td class="col-num">500만원</td>
+            </tr>
+            <tr>
+              <td class="col-item">비품</td>
+              <td class="col-desc">매장 비품, 조리용 기물, 모형, 유니폼 등</td>
+              <td class="col-num">300만원</td>
+            </tr>
+            <tr class="total-row">
+              <td class="col-item">총계 <span style="font-weight:500;font-size:12px;color:#333;">(vat 별도)</span></td>
+              <td class="col-desc"></td>
+              <td class="col-num">5,700만원</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+    </div>
+
+    <!-- 15평 -->
+    <div class="cost-tab-panel" data-panel="15" role="tabpanel">
+      <div class="cost-table-wrap">
+        <table class="cost-table">
+          <colgroup>
+            <col class="cost-col-item">
+            <col class="cost-col-desc">
+            <col class="cost-col-amt">
+          </colgroup>
+          <thead>
+            <tr>
+              <th>품목</th>
+              <th>내용</th>
+              <th>금액 (15평 기준)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-item">가맹비</td>
+              <td class="col-desc">상표권 부여, 영업권 보장, 운영 노하우</td>
+              <td class="col-num"><span class="cost-strike">500만원</span> <span class="cost-free">0원</span></td>
+            </tr>
+            <tr>
+              <td class="col-item">교육비</td>
+              <td class="col-desc">가맹점 운영에 관한 이론 및 실습교육</td>
+              <td class="col-num"><span class="cost-strike">500만원</span> <span class="cost-free">0원</span></td>
+            </tr>
+            <tr>
+              <td class="col-item">오픈홍보</td>
+              <td class="col-desc">오픈이벤트 진행 및 현수막, 배너 등 홍보물 제공</td>
+              <td class="col-num"><span class="cost-strike">350만원</span> <span class="cost-free">0원</span></td>
+            </tr>
+            <tr>
+              <td class="col-item">장비 &amp; 설비</td>
+              <td class="col-desc">커피머신, 그라인더, 핫워터, 냉장 &amp; 냉동고, 제빙기, 블랜더, 세정대, 온수기, 디퍼웰, 작업테이블, 오븐, 오븐랙, DID 3대</td>
+              <td class="col-num"><span class="cost-strike">3,300만원</span><br><span class="cost-new">2,700만원</span><span class="cost-diff">−500만원</span></td>
+            </tr>
+            <tr>
+              <td class="col-item">인테리어</td>
+              <td class="col-desc">최소 10py 공사비용 발생</td>
+              <td class="col-num">2,550만원</td>
+            </tr>
+            <tr>
+              <td class="col-item">설계/감리비</td>
+              <td class="col-desc">도면 설계 및 감리비용</td>
+              <td class="col-num">300만원</td>
+            </tr>
+            <tr>
+              <td class="col-item">간판/사인물</td>
+              <td class="col-desc">전면 간판 (4m 기준), 내외부 사인물 일체</td>
+              <td class="col-num">500만원</td>
+            </tr>
+            <tr>
+              <td class="col-item">비품</td>
+              <td class="col-desc">매장 비품, 조리용 기물, 모형, 유니폼 등</td>
+              <td class="col-num">300만원</td>
+            </tr>
+            <tr class="total-row">
+              <td class="col-item">총계 <span style="font-weight:500;font-size:12px;color:#333;">(vat 별도)</span></td>
+              <td class="col-desc"></td>
+              <td class="col-num">6,350만원</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 20평 -->
+    <div class="cost-tab-panel" data-panel="20" role="tabpanel">
+      <div class="cost-table-wrap">
+        <table class="cost-table">
+          <colgroup>
+            <col class="cost-col-item">
+            <col class="cost-col-desc">
+            <col class="cost-col-amt">
+          </colgroup>
+          <thead>
+            <tr>
+              <th>품목</th>
+              <th>내용</th>
+              <th>금액 (20평 기준)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-item">가맹비</td>
+              <td class="col-desc">상표권 부여, 영업권 보장, 운영 노하우</td>
+              <td class="col-num"><span class="cost-strike">500만원</span> <span class="cost-free">0원</span></td>
+            </tr>
+            <tr>
+              <td class="col-item">교육비</td>
+              <td class="col-desc">가맹점 운영에 관한 이론 및 실습교육</td>
+              <td class="col-num"><span class="cost-strike">500만원</span> <span class="cost-free">0원</span></td>
+            </tr>
+            <tr>
+              <td class="col-item">오픈홍보</td>
+              <td class="col-desc">오픈이벤트 진행 및 현수막, 배너 등 홍보물 제공</td>
+              <td class="col-num"><span class="cost-strike">350만원</span> <span class="cost-free">0원</span></td>
+            </tr>
+            <tr>
+              <td class="col-item">장비 &amp; 설비</td>
+              <td class="col-desc">커피머신, 그라인더, 핫워터, 냉장 &amp; 냉동고, 제빙기, 블랜더, 세정대, 온수기, 디퍼웰, 작업테이블, 오븐, 오븐랙, DID 3대</td>
+              <td class="col-num"><span class="cost-strike">3,300만원</span><br><span class="cost-new">2,400만원</span><span class="cost-diff">−700만원</span></td>
+            </tr>
+            <tr>
+              <td class="col-item">인테리어</td>
+              <td class="col-desc">최소 10py 공사비용 발생</td>
+              <td class="col-num">3,400만원</td>
+            </tr>
+            <tr>
+              <td class="col-item">설계/감리비</td>
+              <td class="col-desc">도면 설계 및 감리비용</td>
+              <td class="col-num">300만원</td>
+            </tr>
+            <tr>
+              <td class="col-item">간판/사인물</td>
+              <td class="col-desc">전면 간판 (4m 기준), 내외부 사인물 일체</td>
+              <td class="col-num">500만원</td>
+            </tr>
+            <tr>
+              <td class="col-item">비품</td>
+              <td class="col-desc">매장 비품, 조리용 기물, 모형, 유니폼 등</td>
+              <td class="col-num">300만원</td>
+            </tr>
+            <tr class="total-row">
+              <td class="col-item">총계 <span style="font-weight:500;font-size:12px;color:#333;">(vat 별도)</span></td>
+              <td class="col-desc"></td>
+              <td class="col-num">6,400만원</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="cost-notes">
+      <p>※ 별도사항: 철거, 냉난방기, 의탁자, 어닝, 테이크아웃 창호, 전기 증설, 한전 불입금, 계약이행보증금</p>
+      <p>※ 전면 3.5m(한칸) 기준 견적입니다. ※ 추가 평당 인테리어 170만원, 설계감리비 평당 15만원 추가 (10평이상부터)</p>
+      <p>※ 로열티 월 15만원 (vat 별도) ※ 상권에 따라 10평 이하 창업도 가능 ※ vat 별도 금액이며, 점포상황에 따라 견적이 상이할 수 있습니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 11-3. 타사 비교 테이블 ══ -->
+<section class="cost-sec alt">
+  <div class="wrap">
+    <div class="eyebrow">타사 비교</div>
+    <h2 class="cost-title">
+      <span class="brown">왜 카페게이트가</span><br>
+      <span class="pink">가장 합리적인가</span>
+    </h2>
+    <p class="cost-desc">같은 평수, 비슷한 예산이라면 '무엇이 포함되어 있는지, 무엇이 없는지' 반드시 확인하셔야 합니다.</p>
+
+    <div class="cost-table-wrap tip-host">
+      <table class="cost-table">
+        <thead>
+          <tr>
+            <th style="min-width:130px;">품목</th>
+            <th class="col-cg"><span class="cost-cg-star">★ 최고 가성비</span>카페게이트</th>
+            <th>M사</th>
+            <th>T사</th>
+            <th>A사</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-item">가맹비</td>
+            <td class="col-num col-cg">
+              면제<span class="tip-wrap"><button type="button" class="tip-toggle" aria-label="자세히">ⓘ</button><span class="tip-content">가맹비 면제, 초기 비용 절감!</span></span>
+              <span class="cost-badge block">한시적 면제</span>
+            </td>
+            <td class="col-num">1,000만원</td>
+            <td class="col-num">500만원</td>
+            <td class="col-num">0원</td>
+          </tr>
+          <tr>
+            <td class="col-item">교육비</td>
+            <td class="col-num col-cg">
+              면제<span class="tip-wrap"><button type="button" class="tip-toggle" aria-label="자세히">ⓘ</button><span class="tip-content">초보자도 쉽게 전문교육시설에서 교육</span></span>
+              <span class="cost-badge block">한시적 면제</span>
+            </td>
+            <td class="col-num">500만원</td>
+            <td class="col-num">300만원</td>
+            <td class="col-num">0원</td>
+          </tr>
+          <tr>
+            <td class="col-item">장비 &amp; 설비</td>
+            <td class="col-num col-cg">
+              2,900만원<span class="tip-wrap"><button type="button" class="tip-toggle" aria-label="자세히">ⓘ</button><span class="tip-content">베이커리 설비일체 DID 3대 포함<br>15평 총 500만원 추가할인<br>20평 총 700만원 추가할인</span></span>
+              <span class="cost-badge block">평수별 추가할인</span>
+            </td>
+            <td class="col-num">3,255만원</td>
+            <td class="col-num">3,200만원</td>
+            <td class="col-num">3,000만원</td>
+          </tr>
+          <tr>
+            <td class="col-item">인테리어</td>
+            <td class="col-num col-cg">
+              1,700만원<span class="tip-wrap"><button type="button" class="tip-toggle" aria-label="자세히">ⓘ</button><span class="tip-content">높은 퀄리티, 합리적인 인테리어 비용</span></span>
+            </td>
+            <td class="col-num">1,500만원</td>
+            <td class="col-num">2,200만원</td>
+            <td class="col-num">2,160만원</td>
+          </tr>
+          <tr>
+            <td class="col-item">설계·감리비</td>
+            <td class="col-num col-cg">
+              300만원<span class="tip-wrap"><button type="button" class="tip-toggle" aria-label="자세히">ⓘ</button><span class="tip-content">직접공사 가능</span></span>
+            </td>
+            <td class="col-num">250만원</td>
+            <td class="col-num">0원</td>
+            <td class="col-num">300만원</td>
+          </tr>
+          <tr>
+            <td class="col-item">간판·사인물</td>
+            <td class="col-num col-cg">500만원</td>
+            <td class="col-num">511만원</td>
+            <td class="col-num">550만원</td>
+            <td class="col-num">500만원</td>
+          </tr>
+          <tr>
+            <td class="col-item">비품</td>
+            <td class="col-num col-cg">300만원</td>
+            <td class="col-num">87만원</td>
+            <td class="col-num">350만원</td>
+            <td class="col-num">400만원</td>
+          </tr>
+          <tr>
+            <td class="col-item">포스·키오스크</td>
+            <td class="col-num col-cg">
+              별도<span class="tip-wrap"><button type="button" class="tip-toggle" aria-label="자세히">ⓘ</button><span class="tip-content">별도: 233만원</span></span>
+            </td>
+            <td class="col-num">321만원+α</td>
+            <td class="col-num">별도</td>
+            <td class="col-num">별도</td>
+          </tr>
+          <tr class="total-row">
+            <td class="col-item">총계</td>
+            <td class="col-num col-cg"><span class="cost-gate-big">5,700만원</span></td>
+            <td class="col-num">7,103만원</td>
+            <td class="col-num">7,100만원</td>
+            <td class="col-num">6,360만원</td>
+          </tr>
+          <tr>
+            <td class="col-item">예상별도비용</td>
+            <td class="col-num col-cg" style="font-weight:400;">1,500만원</td>
+            <td class="col-num">3,000만원</td>
+            <td class="col-num">2,500만원</td>
+            <td class="col-num">2,500만원</td>
+          </tr>
+          <tr class="total-row final-row">
+            <td class="col-item">총개설비용 <span style="font-weight:500;font-size:12px;color:#333;">(vat 별도)</span></td>
+            <td class="col-num col-cg">
+              <span class="cost-gate-big final">7,200만원</span>
+              <span class="cost-badge impact">🔥 타사 대비 최대 3,000만원 저렴</span>
+              <span class="cost-lowest">✓ 최저 총개설비용</span>
+            </td>
+            <td class="col-num">10,103만원</td>
+            <td class="col-num">9,600만원</td>
+            <td class="col-num">8,860만원</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cost-notes">
+      <p>※ 10평 기준 개설비용 비교이며, 공시 자료를 비교한 것으로 실제로는 더 큰 차이가 있을 수 있습니다.</p>
+      <p>※ vat 별도 금액이며, 점포 상황에 따라 견적이 상이하므로 자세한 내용은 상담을 통해 확인해주세요.</p>
     </div>
   </div>
 </section>
@@ -1953,7 +3175,7 @@ footer {
   <div class="wrap">
     <div class="form-layout">
       <div class="form-left">
-        <div class="eyebrow">무료 상담 신청</div>
+        <div class="eyebrow">무료 창업상담 신청</div>
         <h2>내 상권·예산에 맞는<br>손익 분석 받기</h2>
         <p>아직 확실하지 않아도 괜찮습니다. 상담은 결정이 아니라, 정보를 확인하는 것에서 시작합니다.</p>
         <div class="form-points">
@@ -1965,7 +3187,7 @@ footer {
       </div>
       <div class="form-box">
         <div class="form-box-head">
-          <h3>무료 손익 분석 신청하기</h3>
+          <h3>무료 창업상담 신청하기</h3>
           <p>담당자가 영업일 1일 이내 연락드립니다.</p>
         </div>
         <div class="form-box-body">
@@ -2010,18 +3232,19 @@ footer {
             <select id="f_source">
               <option value="" disabled selected>어디서 알게 되셨나요?</option>
               <option>네이버 검색</option>
+              <option>인스타그램</option>
+              <option>유튜브</option>
               <option>마이프차 / 창업 플랫폼</option>
-              <option>인스타그램 / 유튜브 광고</option>
               <option>지인 소개</option>
-              <option>다점포 점주 추천</option>
+              <option>매장 방문</option>
               <option>기타</option>
             </select>
           </div>
           <div class="fg">
             <label>문의 내용 <span class="opt">(선택)</span></label>
-            <textarea id="f_msg" placeholder="궁금한 점을 자유롭게 적어주세요. (예: 특정 상권 분석, 샌드위치바 도입 여부, 투자 회수 기간 등)"></textarea>
+            <textarea id="f_msg" placeholder="예: 특정 상권 분석 / 희망 지역 / 투자 회수 기간 / 창업 비용 등"></textarea>
           </div>
-          <button class="form-submit" onclick="submitForm()">무료 손익 분석 신청하기 →</button>
+          <button class="form-submit" onclick="submitForm()">무료 창업상담 신청하기 →</button>
           <p class="form-privacy">입력하신 정보는 창업 상담 목적으로만 사용되며, 제3자에게 제공되지 않습니다.</p>
         </div>
       </div>
@@ -2036,21 +3259,6 @@ footer {
   <div class="success-desc">담당자가 확인 후 <strong>영업일 1일 이내</strong>로 연락드립니다.<br>그 전에 손익 구조를 미리 확인해두시면 상담이 더 풍부해집니다.</div>
   <button class="success-close" onclick="document.getElementById('successOverlay').classList.remove('show')">닫기</button>
 </div>
-
-<!-- FOOTER -->
-<footer>
-  <div>
-    <div class="footer-logo">CAFE<span>GATE</span></div>
-    <div class="footer-desc">
-      카페게이트 창업 문의 · 2015년 창업 · 전국 150개 매장 운영<br>
-      건강하고 맛있는 일상 카페 · 따뜻하고 생활밀착형 브랜드
-    </div>
-  </div>
-  <div class="footer-desc" style="text-align:right;max-width:380px;">
-    ※ 본 페이지에 표시된 매출·수익 데이터는 실매장 실적 참고 수치이며, 모든 가맹점의 동일한 결과를 보장하지 않습니다.<br>
-    ※ 가맹사업법에 따른 정보공개서를 열람 후 창업을 결정하시기 바랍니다.
-  </div>
-</footer>
 
 <script>
 /* 배경 이미지 슬라이드쇼 */
@@ -2083,6 +3291,37 @@ function switchTab(idx) {
   document.querySelectorAll('.s-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
   document.querySelectorAll('.s-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
 }
+
+/* 개설비용 평수 탭 */
+document.querySelectorAll('.cost-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const size = btn.dataset.size;
+    document.querySelectorAll('.cost-tab').forEach(b => {
+      const isActive = b.dataset.size === size;
+      b.classList.toggle('active', isActive);
+      b.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+    document.querySelectorAll('.cost-tab-panel').forEach(p => {
+      p.classList.toggle('active', p.dataset.panel === size);
+    });
+  });
+});
+
+/* 타사 비교 표 툴팁 토글 */
+document.querySelectorAll('.tip-toggle').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const wrap = btn.closest('.tip-wrap');
+    const wasOpen = wrap.classList.contains('tip-open');
+    document.querySelectorAll('.tip-wrap.tip-open').forEach(w => w.classList.remove('tip-open'));
+    if (!wasOpen) wrap.classList.add('tip-open');
+  });
+});
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.tip-wrap')) {
+    document.querySelectorAll('.tip-wrap.tip-open').forEach(w => w.classList.remove('tip-open'));
+  }
+});
 
 /* 폼 제출 */
 function submitForm() {
