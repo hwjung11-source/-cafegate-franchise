@@ -33,6 +33,8 @@
 
 html { scroll-behavior: smooth; }
 body {
+  margin: 0;
+  padding: 0;
   font-family: 'Pretendard Variable', 'Pretendard', -apple-system, 'Apple SD Gothic Neo', sans-serif;
   background: var(--bg);
   color: var(--text);
@@ -139,7 +141,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
   z-index: 2;
   display: flex;
   flex-direction: column;
-  padding: 120px 80px 64px;
+  padding: 32px 80px 40px;
   max-width: 1080px;
   margin: 0 auto;
   width: 100%;
@@ -264,7 +266,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
   box-sizing: border-box;
 }
 .hero-stat-item {
-  padding: 28px 12px;
+  padding: 20px 12px;
   text-align: center;
 }
 .h-stat-num {
@@ -500,14 +502,14 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
 /* 매출 카드 그리드 */
 .sales-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 14px;
 }
 .sales-card {
   background: var(--bg-white);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 22px 18px 18px;
+  padding: 28px 24px;
   transition: transform 0.18s, box-shadow 0.18s;
   text-align: center;
 }
@@ -538,7 +540,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
   letter-spacing: -0.02em;
   color: var(--primary);
   line-height: 1.05;
-  margin-bottom: 2px;
+  margin-bottom: 6px;
 }
 .sales-card.big .sales-card-amt {
   color: var(--primary);
@@ -550,7 +552,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
   font-size: 17px;
   color: #111;
   line-height: 1.3;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
   font-weight: 600;
 }
 .sales-card.big .sales-card-desc { color: #444; }
@@ -1440,22 +1442,22 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
 .owner-list { display: flex; flex-direction: column; gap: 16px; }
 
 .owner-item {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
   background: #fff;
   border: 1px solid #EAD9CC;
   border-radius: 12px;
   overflow: hidden;
   text-decoration: none;
-  transition: box-shadow .2s, transform .2s;
+  transition: box-shadow .2s;
 }
-.owner-item:hover { box-shadow: 0 6px 20px rgba(0,0,0,.08); transform: translateY(-2px); }
+.owner-item:hover { box-shadow: 0 6px 20px rgba(0,0,0,.08); }
 .owner-thumb {
-  overflow: hidden;
   flex-shrink: 0;
   width: 200px;
   min-width: 200px;
+  overflow: hidden;
 }
 .owner-thumb img {
   width: 100%;
@@ -1463,7 +1465,15 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
   object-fit: cover;
   display: block;
 }
-.owner-item-body { padding: 16px 20px; display: flex; flex-direction: column; gap: 6px; justify-content: center; }
+.owner-item-body {
+  flex: 1;
+  min-width: 0;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+}
 .owner-item-title { font-size: 15px; font-weight: 700; color: #1a1a1a; line-height: 1.4; word-break: keep-all; }
 .owner-item-desc { font-size: 13px; color: #222; line-height: 1.6; word-break: keep-all; }
 .owner-item-from { font-size: 12px; color: #bbb; }
@@ -1474,7 +1484,6 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
   .owner-featured-body { padding: 24px; }
 }
 @media (max-width: 480px) {
-  .owner-item { grid-template-columns: 130px 1fr; }
   .owner-thumb {
     width: 130px;
     min-width: 130px;
@@ -2005,29 +2014,80 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
 .success-overlay {
   display: none;
   position: fixed;
-  inset: 0;
-  background: rgba(17,17,17,0.95);
-  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-  text-align: center;
-  padding: 40px;
+  z-index: 9999;
+  background: rgba(255, 240, 245, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 .success-overlay.show { display: flex; }
-.success-icon { font-size: 56px; margin-bottom: 24px; }
-.success-title { font-size: 32px; font-weight: 800; color: #fff; margin-bottom: 14px; letter-spacing: -0.04em; }
-.success-desc { font-size: 16px; color: rgba(255,255,255,0.5); line-height: 1.8; margin-bottom: 28px; }
+.success-card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 40px 28px;
+  text-align: center;
+  max-width: 360px;
+  width: 88%;
+  box-shadow: 0 20px 60px rgba(240, 48, 98, 0.15);
+  animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.success-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF2B5E, #FF6B8A);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  box-shadow: 0 8px 24px rgba(255, 43, 94, 0.35);
+}
+.success-icon svg { width: 38px; height: 38px; display: block; }
+.success-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
+}
+.success-desc {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+  margin: 0 0 8px;
+}
+.success-desc strong { color: #FF2B5E; }
+.success-desc-sub {
+  font-size: 13px;
+  color: #999;
+  line-height: 1.6;
+  margin: 0 0 32px;
+}
 .success-close {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.12);
+  background: linear-gradient(135deg, #FF2B5E, #FF6B8A);
   color: #fff;
-  font-size: 16px;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 48px;
+  font-size: 15px;
+  font-weight: 600;
   font-family: inherit;
-  font-weight: 500;
-  padding: 12px 28px;
-  border-radius: 100px;
   cursor: pointer;
+  box-shadow: 0 4px 16px rgba(255, 43, 94, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.success-close:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 43, 94, 0.4);
+}
+@keyframes popIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
 }
 
 /* ══════════════════════════════════════════
@@ -2097,6 +2157,365 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ══════════════════════════════════════════
+   PC STICKY BOTTOM BAR (1024px 이상에서만)
+══════════════════════════════════════════ */
+@media (min-width: 1024px) {
+  .sticky-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    z-index: 9000;
+    box-shadow: 0 -2px 20px rgba(0,0,0,0.10);
+    padding: 14px 0;
+    border-top: 1px solid #eeeeee;
+  }
+  .sticky-bar-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .sticky-bar-tel {
+    font-size: 14px;
+    font-weight: 800;
+    color: #111111;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+    margin-right: 8px;
+  }
+  .sticky-bar-tel span {
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    color: var(--primary);
+  }
+  .sticky-bar input,
+  .sticky-bar select {
+    height: 44px;
+    border: 1.5px solid #e8e4de;
+    border-radius: 8px;
+    background: #f7f5f2;
+    color: #111;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0 14px;
+    outline: none;
+    flex: 1;
+    min-width: 0;
+    letter-spacing: -0.02em;
+    -webkit-appearance: none;
+    appearance: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .sticky-bar input::placeholder { color: #aaaaaa; }
+  .sticky-bar select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23aaaaaa' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+    background-color: #f7f5f2;
+  }
+  .sticky-bar select option { color: #111; background: #fff; }
+  .sticky-bar input:focus,
+  .sticky-bar select:focus {
+    border-color: var(--primary);
+    background: #fff;
+  }
+  .sticky-bar-btn {
+    height: 44px;
+    padding: 0 24px;
+    background: var(--primary);
+    color: #fff;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 800;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    letter-spacing: -0.02em;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .sticky-bar-btn:hover { background: #e0224f; transform: translateY(-1px); }
+  body { padding-bottom: 74px; }
+}
+@media (max-width: 1023px) {
+  .sticky-bar { display: none !important; }
+}
+
+/* 혜택 바 */
+.cost-benefit-bar {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 12px;
+  padding: 20px 24px 16px;
+  margin-top: 2px;
+}
+.cost-benefit-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+.cost-benefit-title strong {
+  color: #FF2F6A;
+  font-size: 18px;
+}
+.cost-benefit-items {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.cost-benefit-item {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  padding: 8px 14px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.cost-benefit-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+.cost-benefit-val {
+  font-size: 16px;
+  font-weight: 800;
+  color: #FF2F6A;
+  letter-spacing: -0.02em;
+}
+.cost-benefit-plus {
+  font-size: 18px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.4);
+  flex-shrink: 0;
+}
+.cost-benefit-note {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: -0.01em;
+}
+
+.sales-card-type {
+  display: inline-block;
+  background: rgba(255,47,106,0.10);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-bottom: 6px;
+}
+
+/* ── 혜택 바 ── */
+.cost-benefit-bar {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 0 0 12px 12px;
+  padding: 28px 32px 24px;
+  text-align: center;
+}
+.cost-benefit-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #FF2F6A;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+  background: rgba(255,47,106,0.12);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+.cost-benefit-headline {
+  font-size: 36px;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+.cost-benefit-headline em {
+  color: #FF2F6A;
+  font-style: normal;
+  font-size: 42px;
+}
+.cost-benefit-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 24px;
+  letter-spacing: -0.01em;
+}
+.cost-benefit-plus-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.cost-benefit-chip {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  padding: 8px 16px;
+  text-align: center;
+}
+.cost-benefit-chip-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 3px;
+  letter-spacing: -0.01em;
+}
+.cost-benefit-chip-val {
+  font-size: 20px;
+  font-weight: 800;
+  color: #ff6b95;
+  letter-spacing: -0.02em;
+}
+.cost-benefit-plus-sign {
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.25);
+  flex-shrink: 0;
+}
+.cost-benefit-total-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #FF2F6A;
+  border-radius: 10px;
+  padding: 14px 24px;
+  margin-bottom: 14px;
+}
+.cost-benefit-total-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: -0.01em;
+}
+.cost-benefit-total-amt {
+  font-size: 26px;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.03em;
+}
+.cost-benefit-total-eq {
+  font-size: 20px;
+  color: rgba(255,255,255,0.6);
+}
+.cost-benefit-note {
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: -0.01em;
+}
+
+@keyframes blink2 {
+  0%, 100% { opacity: 1; }
+  20%       { opacity: 0; }
+  40%       { opacity: 1; }
+  60%       { opacity: 0; }
+  80%       { opacity: 1; }
+}
+.cost-benefit-headline em {
+  animation: blink2 2.4s ease-in-out infinite;
+}
+
+.cost-benefit-chip.samsung .cost-benefit-chip-label::before {
+  content: 'samsung';
+  display: inline-block;
+  background: #1428A0;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 1px 5px;
+  border-radius: 3px;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+.cost-benefit-chip.samsung .cost-benefit-chip-val {
+  color: #7eb3ff;
+}
+.cost-benefit-chip.kb .cost-benefit-chip-label::before {
+  content: 'KB';
+  display: inline-block;
+  background: #F5A500;
+  color: #1a1a1a;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  padding: 1px 5px;
+  border-radius: 3px;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+.cost-benefit-chip.kb .cost-benefit-chip-val {
+  color: #FFD166;
+}
+
+/* ── TOP 버튼 ── */
+.top-btn {
+  position: fixed;
+  bottom: 90px;
+  right: 28px;
+  width: 48px;
+  height: 48px;
+  background: #fff;
+  border: 1.5px solid #e8e4de;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 8000;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.3s, transform 0.3s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+}
+.top-btn.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.top-btn:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  border-color: var(--primary);
+}
+.top-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: #555;
+  transition: stroke 0.2s;
+}
+.top-btn:hover svg { stroke: var(--primary); }
+
+@keyframes blinkBadge {
+  0%, 100% { opacity: 1; }
+  20%       { opacity: 0.15; }
+  40%       { opacity: 1; }
+  60%       { opacity: 0.15; }
+  80%       { opacity: 1; }
+}
+.cost-badge.impact {
+  animation: blinkBadge 2.4s ease-in-out infinite;
+}
+
+.sales .section-desc { margin-bottom: 32px; }
 </style>
 </head>
 <body>
@@ -2143,7 +2562,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
       커피와 샌드위치로 증명된 성공모델입니다.
     </p>
     <div class="hero-btns">
-      <a href="#form" class="btn-main">무료 창업상담 신청</a>
+      <a href="#apply-form" class="btn-main" onclick="event.preventDefault(); document.getElementById('apply-form').scrollIntoView({behavior:'smooth', block:'start'});">무료 창업상담 신청</a>
       
     </div>
   </div>
@@ -2264,6 +2683,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
         <div class="sales-card-loc">서울 S점</div>
         <div class="sales-card-amt">₩3,048,300</div>
         <div class="sales-card-desc">오픈 하루만에 월세 해결!</div>
+        <div class="sales-card-type">일 매출</div>
         <div class="sales-card-date">23년 5월 기준</div>
       </div>
 
@@ -2271,6 +2691,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
         <div class="sales-card-loc">경기 Y점</div>
         <div class="sales-card-amt">₩2,018,300</div>
         <div class="sales-card-desc">다점포 점주 신규 오픈매장</div>
+        <div class="sales-card-type">일 매출</div>
         <div class="sales-card-date">25년 7월 기준</div>
       </div>
 
@@ -2278,6 +2699,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
         <div class="sales-card-loc">경기 D점</div>
         <div class="sales-card-amt">₩2,000,450</div>
         <div class="sales-card-desc">매년 지속 매출↑ 매장</div>
+        <div class="sales-card-type">일 매출</div>
         <div class="sales-card-date">25년 4월 기준</div>
       </div>
 
@@ -2285,6 +2707,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
         <div class="sales-card-loc">서울 D점</div>
         <div class="sales-card-amt">₩1,717,381</div>
         <div class="sales-card-desc">M,O커피 동일상권 이기는 매출</div>
+        <div class="sales-card-type">일 매출</div>
         <div class="sales-card-date">25년 7월 기준</div>
       </div>
 
@@ -2292,6 +2715,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
         <div class="sales-card-loc">서울 Y점</div>
         <div class="sales-card-amt">₩1,599,800</div>
         <div class="sales-card-desc">5년째 고매출 매장</div>
+        <div class="sales-card-type">일 매출</div>
         <div class="sales-card-date">25년 7월 기준</div>
       </div>
 
@@ -2299,6 +2723,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
         <div class="sales-card-loc">경기 B점</div>
         <div class="sales-card-amt">₩1,999,300</div>
         <div class="sales-card-desc">생애 최초 창업</div>
+        <div class="sales-card-type">일 매출</div>
         <div class="sales-card-date">25년 4월 기준</div>
       </div>
 
@@ -2306,6 +2731,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
         <div class="sales-card-loc">경기 G점</div>
         <div class="sales-card-amt">₩1,782,200</div>
         <div class="sales-card-desc">젊은 부부 창업</div>
+        <div class="sales-card-type">일 매출</div>
         <div class="sales-card-date">25년 4월 기준</div>
       </div>
 
@@ -2313,6 +2739,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
         <div class="sales-card-loc">충청 H점</div>
         <div class="sales-card-amt">₩1,689,300</div>
         <div class="sales-card-desc">오피스·주거 복합 상권</div>
+        <div class="sales-card-type">일 매출</div>
         <div class="sales-card-date">25년 7월 기준</div>
       </div>
 
@@ -2320,6 +2747,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
         <div class="sales-card-loc">경기 J점</div>
         <div class="sales-card-amt">₩1,508,400</div>
         <div class="sales-card-desc">다점포 점주 운영 매장</div>
+        <div class="sales-card-type">일 매출</div>
         <div class="sales-card-date">25년 7월 기준</div>
       </div>
 
@@ -2327,6 +2755,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
         <div class="sales-card-loc">경기 B점</div>
         <div class="sales-card-amt">₩1,360,800</div>
         <div class="sales-card-desc">V,O커피 동일상권 이기는 매출</div>
+        <div class="sales-card-type">일 매출</div>
         <div class="sales-card-date">25년 2월 기준</div>
       </div>
 
@@ -2595,7 +3024,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
           <div class="bean-col" style="background:#F7F5F2 !important;">
             <div class="bean-col-tag">타사 원두가격</div>
             <div class="bean-img-wrap">
-              <img src="./타브랜드원두.png"
+              <img src="https://hwjung11-source.github.io/-cafegate-franchise2/bean1.png"
                    alt="타사 원두" style="width:120px;display:block;background:#F7F5F2 !important;border:none !important;outline:none !important;">
             </div>
             <div class="bean-price-wrap">
@@ -2606,7 +3035,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
           <div class="bean-col ours">
             <div class="bean-col-tag">카페게이트 — 상위 스페셜티</div>
             <div class="bean-img-wrap">
-              <img src="./원두이미지2.png"
+              <img src="https://hwjung11-source.github.io/-cafegate-franchise2/bean2.png"
                    alt="카페게이트 원두" style="width:150px;display:block;background:transparent !important;border:none !important;outline:none !important;">
             </div>
             <div class="bean-price-wrap">
@@ -2645,7 +3074,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
         <div class="rocket-flow">
           <div class="rocket-flow-step">
             <div class="rocket-flow-img">
-              <img src="./물류1.png" alt="물류센터">
+              <img src="https://hwjung11-source.github.io/-cafegate-franchise2/mulyu1.png" alt="물류센터">
             </div>
             <div class="rocket-flow-label">원자재 및 물류 입고</div>
           </div>
@@ -2655,7 +3084,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
           <div class="rocket-flow-step rocket-flow-truck">
             <div class="rocket-flow-badge">주 6회 배송</div>
             <div class="rocket-flow-img">
-              <img src="./물류2.png" alt="CAFE GATE 트럭">
+              <img src="https://hwjung11-source.github.io/-cafegate-franchise2/mulyu2.png" alt="CAFE GATE 트럭">
             </div>
             <div class="rocket-flow-label">통합물류 시스템</div>
           </div>
@@ -2667,7 +3096,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
           </div>
 
           <div class="rocket-flow-stores">
-            <img src="./물류3.png" alt="매장">
+            <img src="https://hwjung11-source.github.io/-cafegate-franchise2/mulyu3.png" alt="매장">
             <div class="rocket-flow-label">매장 수령</div>
           </div>
         </div>
@@ -2719,7 +3148,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
 
     <div class="education-grid reveal">
       <div class="education-img">
-        <img src="./교육이미지.png" alt="카페게이트 교육 현장" loading="lazy">
+        <img src="https://hwjung11-source.github.io/-cafegate-franchise2/education.png" alt="카페게이트 교육 현장" loading="lazy">
       </div>
       <div class="education-text">
         <h3 class="education-headline">교육만 들어서 가능할까?<br>두려운 점주님, 걱정마세요.</h3>
@@ -2862,12 +3291,12 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
             <tr>
               <td class="col-item">오픈홍보</td>
               <td class="col-desc">오픈이벤트 진행 및 현수막, 배너 등 홍보물 제공</td>
-              <td class="col-num"><span class="cost-strike">350만원</span> <span class="cost-free">0원</span></td>
+              <td class="col-num"><span class="cost-strike">400만원</span> <span class="cost-free">0원</span></td>
             </tr>
             <tr>
               <td class="col-item">장비 &amp; 설비</td>
               <td class="col-desc">커피머신, 그라인더, 핫워터, 냉장 &amp; 냉동고, 제빙기, 블랜더, 세정대, 온수기, 디퍼웰, 작업테이블, 오븐, 오븐랙, DID 3대</td>
-              <td class="col-num"><span class="cost-strike">3,300만원</span><br><span class="cost-new">2,900만원</span><span class="cost-diff">−300만원</span></td>
+              <td class="col-num"><span class="cost-strike">3,300만원</span><br><span class="cost-new">2,900만원</span><span class="cost-diff">−400만원</span></td>
             </tr>
             <tr>
               <td class="col-item">인테리어</td>
@@ -2893,6 +3322,42 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
               <td class="col-item">총계 <span style="font-weight:500;font-size:12px;color:#333;">(vat 별도)</span></td>
               <td class="col-desc"></td>
               <td class="col-num">5,700만원</td>
+            </tr>
+            <tr class="benefit-row">
+              <td colspan="3" style="padding:0;">
+                <div class="cost-benefit-bar">
+                  <div class="cost-benefit-eyebrow">🎁 본사 창립 16주년 기념</div>
+                  <div class="cost-benefit-headline">창업 혜택 <em>9,000만원</em></div>
+                  <div class="cost-benefit-sub">가맹비 · 교육비 · 마케팅비 면제 + 금융 지원</div>
+                  <div class="cost-benefit-plus-row">
+                    <div class="cost-benefit-chip">
+                      <div class="cost-benefit-chip-label">가맹비</div>
+                      <div class="cost-benefit-chip-val">500만원</div>
+                    </div>
+                    <div class="cost-benefit-plus-sign">+</div>
+                    <div class="cost-benefit-chip">
+                      <div class="cost-benefit-chip-label">교육비</div>
+                      <div class="cost-benefit-chip-val">500만원</div>
+                    </div>
+                    <div class="cost-benefit-plus-sign">+</div>
+                    <div class="cost-benefit-chip">
+                      <div class="cost-benefit-chip-label">초기마케팅비</div>
+                      <div class="cost-benefit-chip-val">400만원</div>
+                    </div>
+                    <div class="cost-benefit-plus-sign">+</div>
+                    <div class="cost-benefit-chip samsung">
+                      <div class="cost-benefit-chip-label">무이자 할부</div>
+                      <div class="cost-benefit-chip-val">2,600만원</div>
+                    </div>
+                    <div class="cost-benefit-plus-sign">+</div>
+                    <div class="cost-benefit-chip kb">
+                      <div class="cost-benefit-chip-label">국민은행 창업대출</div>
+                      <div class="cost-benefit-chip-val">5,000만원</div>
+                    </div>
+                  </div>
+                  <div class="cost-benefit-note">* 혜택은 15평 이상, 6월까지 가맹 계약 완료 시 적용됩니다.</div>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -2929,12 +3394,12 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
             <tr>
               <td class="col-item">오픈홍보</td>
               <td class="col-desc">오픈이벤트 진행 및 현수막, 배너 등 홍보물 제공</td>
-              <td class="col-num"><span class="cost-strike">350만원</span> <span class="cost-free">0원</span></td>
+              <td class="col-num"><span class="cost-strike">400만원</span> <span class="cost-free">0원</span></td>
             </tr>
             <tr>
               <td class="col-item">장비 &amp; 설비</td>
               <td class="col-desc">커피머신, 그라인더, 핫워터, 냉장 &amp; 냉동고, 제빙기, 블랜더, 세정대, 온수기, 디퍼웰, 작업테이블, 오븐, 오븐랙, DID 3대</td>
-              <td class="col-num"><span class="cost-strike">3,300만원</span><br><span class="cost-new">2,700만원</span><span class="cost-diff">−500만원</span></td>
+              <td class="col-num"><span class="cost-strike">3,300만원</span><br><span class="cost-new">2,700만원</span><span class="cost-diff">−600만원</span></td>
             </tr>
             <tr>
               <td class="col-item">인테리어</td>
@@ -2960,6 +3425,42 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
               <td class="col-item">총계 <span style="font-weight:500;font-size:12px;color:#333;">(vat 별도)</span></td>
               <td class="col-desc"></td>
               <td class="col-num">6,350만원</td>
+            </tr>
+            <tr class="benefit-row">
+              <td colspan="3" style="padding:0;">
+                <div class="cost-benefit-bar">
+                  <div class="cost-benefit-eyebrow">🎁 본사 창립 16주년 기념</div>
+                  <div class="cost-benefit-headline">창업 혜택 <em>9,000만원</em></div>
+                  <div class="cost-benefit-sub">가맹비 · 교육비 · 마케팅비 면제 + 금융 지원</div>
+                  <div class="cost-benefit-plus-row">
+                    <div class="cost-benefit-chip">
+                      <div class="cost-benefit-chip-label">가맹비</div>
+                      <div class="cost-benefit-chip-val">500만원</div>
+                    </div>
+                    <div class="cost-benefit-plus-sign">+</div>
+                    <div class="cost-benefit-chip">
+                      <div class="cost-benefit-chip-label">교육비</div>
+                      <div class="cost-benefit-chip-val">500만원</div>
+                    </div>
+                    <div class="cost-benefit-plus-sign">+</div>
+                    <div class="cost-benefit-chip">
+                      <div class="cost-benefit-chip-label">초기마케팅비</div>
+                      <div class="cost-benefit-chip-val">400만원</div>
+                    </div>
+                    <div class="cost-benefit-plus-sign">+</div>
+                    <div class="cost-benefit-chip samsung">
+                      <div class="cost-benefit-chip-label">무이자 할부</div>
+                      <div class="cost-benefit-chip-val">2,600만원</div>
+                    </div>
+                    <div class="cost-benefit-plus-sign">+</div>
+                    <div class="cost-benefit-chip kb">
+                      <div class="cost-benefit-chip-label">국민은행 창업대출</div>
+                      <div class="cost-benefit-chip-val">5,000만원</div>
+                    </div>
+                  </div>
+                  <div class="cost-benefit-note">* 혜택은 15평 이상, 6월까지 가맹 계약 완료 시 적용됩니다.</div>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -2996,12 +3497,12 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
             <tr>
               <td class="col-item">오픈홍보</td>
               <td class="col-desc">오픈이벤트 진행 및 현수막, 배너 등 홍보물 제공</td>
-              <td class="col-num"><span class="cost-strike">350만원</span> <span class="cost-free">0원</span></td>
+              <td class="col-num"><span class="cost-strike">400만원</span> <span class="cost-free">0원</span></td>
             </tr>
             <tr>
               <td class="col-item">장비 &amp; 설비</td>
               <td class="col-desc">커피머신, 그라인더, 핫워터, 냉장 &amp; 냉동고, 제빙기, 블랜더, 세정대, 온수기, 디퍼웰, 작업테이블, 오븐, 오븐랙, DID 3대</td>
-              <td class="col-num"><span class="cost-strike">3,300만원</span><br><span class="cost-new">2,400만원</span><span class="cost-diff">−700만원</span></td>
+              <td class="col-num"><span class="cost-strike">3,300만원</span><br><span class="cost-new">2,500만원</span><span class="cost-diff">−800만원</span></td>
             </tr>
             <tr>
               <td class="col-item">인테리어</td>
@@ -3026,7 +3527,43 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
             <tr class="total-row">
               <td class="col-item">총계 <span style="font-weight:500;font-size:12px;color:#333;">(vat 별도)</span></td>
               <td class="col-desc"></td>
-              <td class="col-num">6,400만원</td>
+              <td class="col-num">7,000만원</td>
+            </tr>
+            <tr class="benefit-row">
+              <td colspan="3" style="padding:0;">
+                <div class="cost-benefit-bar">
+                  <div class="cost-benefit-eyebrow">🎁 본사 창립 16주년 기념</div>
+                  <div class="cost-benefit-headline">창업 혜택 <em>9,000만원</em></div>
+                  <div class="cost-benefit-sub">가맹비 · 교육비 · 마케팅비 면제 + 금융 지원</div>
+                  <div class="cost-benefit-plus-row">
+                    <div class="cost-benefit-chip">
+                      <div class="cost-benefit-chip-label">가맹비</div>
+                      <div class="cost-benefit-chip-val">500만원</div>
+                    </div>
+                    <div class="cost-benefit-plus-sign">+</div>
+                    <div class="cost-benefit-chip">
+                      <div class="cost-benefit-chip-label">교육비</div>
+                      <div class="cost-benefit-chip-val">500만원</div>
+                    </div>
+                    <div class="cost-benefit-plus-sign">+</div>
+                    <div class="cost-benefit-chip">
+                      <div class="cost-benefit-chip-label">초기마케팅비</div>
+                      <div class="cost-benefit-chip-val">400만원</div>
+                    </div>
+                    <div class="cost-benefit-plus-sign">+</div>
+                    <div class="cost-benefit-chip samsung">
+                      <div class="cost-benefit-chip-label">무이자 할부</div>
+                      <div class="cost-benefit-chip-val">2,600만원</div>
+                    </div>
+                    <div class="cost-benefit-plus-sign">+</div>
+                    <div class="cost-benefit-chip kb">
+                      <div class="cost-benefit-chip-label">국민은행 창업대출</div>
+                      <div class="cost-benefit-chip-val">5,000만원</div>
+                    </div>
+                  </div>
+                  <div class="cost-benefit-note">* 혜택은 15평 이상, 6월까지 가맹 계약 완료 시 적용됩니다.</div>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -3086,7 +3623,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
           <tr>
             <td class="col-item">장비 &amp; 설비</td>
             <td class="col-num col-cg">
-              2,900만원<span class="tip-wrap"><button type="button" class="tip-toggle" aria-label="자세히">ⓘ</button><span class="tip-content">베이커리 설비일체 DID 3대 포함<br>15평 총 500만원 추가할인<br>20평 총 700만원 추가할인</span></span>
+              2,900만원<span class="tip-wrap"><button type="button" class="tip-toggle" aria-label="자세히">ⓘ</button><span class="tip-content">베이커리 설비일체 DID 3대 포함<br>15평 총 600만원 추가할인<br>20평 총 800만원 추가할인</span></span>
               <span class="cost-badge block">평수별 추가할인</span>
             </td>
             <td class="col-num">3,255만원</td>
@@ -3171,7 +3708,7 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
 </section>
 
 <!-- ══ 12. DB 폼 ══ -->
-<section class="form-sec" id="form">
+<section class="form-sec" id="apply-form">
   <div class="wrap">
     <div class="form-layout">
       <div class="form-left">
@@ -3252,12 +3789,49 @@ h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.25; }
   </div>
 </section>
 
+<!-- ══ PC STICKY BOTTOM BAR ══ -->
+<div class="sticky-bar" id="stickyBar">
+  <div class="sticky-bar-inner">
+    <div class="sticky-bar-tel">
+      가맹문의 <span>1599-1067</span>
+    </div>
+    <input  type="text" id="sb_name"   placeholder="성함">
+    <input  type="tel"  id="sb_tel"    placeholder="연락처">
+    <select id="sb_source">
+      <option value="" disabled selected>유입경로</option>
+      <option>네이버 검색</option>
+      <option>인스타그램</option>
+      <option>유튜브</option>
+      <option>마이프차 / 창업 플랫폼</option>
+      <option>지인 소개</option>
+      <option>매장 방문</option>
+      <option>기타</option>
+    </select>
+    <input type="text" id="sb_region" placeholder="희망지역">
+    <button class="sticky-bar-btn" onclick="submitStickyBar()">상담신청</button>
+  </div>
+</div>
+
+<!-- ── TOP 버튼 ── -->
+<button class="top-btn" id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">
+  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 15l-6-6-6 6"/>
+  </svg>
+</button>
+
 <!-- SUCCESS -->
 <div class="success-overlay" id="successOverlay">
-  <div class="success-icon">✅</div>
-  <div class="success-title">신청이 완료됐습니다</div>
-  <div class="success-desc">담당자가 확인 후 <strong>영업일 1일 이내</strong>로 연락드립니다.<br>그 전에 손익 구조를 미리 확인해두시면 상담이 더 풍부해집니다.</div>
-  <button class="success-close" onclick="document.getElementById('successOverlay').classList.remove('show')">닫기</button>
+  <div class="success-card">
+    <div class="success-icon">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M5 13l4 4L19 7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h2 class="success-title">신청이 완료됐습니다!</h2>
+    <p class="success-desc">담당자가 확인 후 <strong>영업일 1일 이내</strong>로 연락드립니다.</p>
+    <p class="success-desc-sub">그 전에 손익 구조를 미리 확인해두시면 상담이 더 풍부해집니다.</p>
+    <button class="success-close" onclick="document.getElementById('successOverlay').classList.remove('show'); document.body.style.overflow = '';">닫기</button>
+  </div>
 </div>
 
 <script>
@@ -3323,8 +3897,10 @@ document.addEventListener('click', (e) => {
   }
 });
 
-/* 폼 제출 */
-function submitForm() {
+/* 폼 제출 (Google Apps Script 웹훅) */
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxxpk5lLm_SkN1fwCUvJ9-u2NbHbxB82qg82_nm7tBIHsGMLuAL2LKCgtXhxipj77LC/exec';
+
+async function submitForm() {
   const r = document.getElementById('f_region');
   const b = document.getElementById('f_budget');
   const n = document.getElementById('f_name');
@@ -3339,15 +3915,93 @@ function submitForm() {
     if (!el.value.trim()) ok = false;
   });
   if (!ok) { alert('필수 항목을 입력해주세요.'); return; }
-  document.getElementById('successOverlay').classList.add('show');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  console.log('f_region:', r.value);
+  console.log('f_budget:', b.value);
+  console.log('f_name:', n.value);
+  console.log('f_tel:', t.value);
+  console.log('f_source:', document.getElementById('f_source').value);
+  console.log('f_msg:', document.getElementById('f_msg').value);
+
+  const formData = {
+    name:    n.value,
+    phone:   t.value,
+    region:  r.value,
+    budget:  b.value,
+    channel: document.getElementById('f_source').value,
+    message: document.getElementById('f_msg').value
+  };
+
+  try {
+    const params = new URLSearchParams({
+      name:    formData.name,
+      phone:   formData.phone,
+      region:  formData.region,
+      budget:  formData.budget,
+      channel: formData.channel,
+      message: formData.message
+    });
+
+    await fetch(SCRIPT_URL + '?' + params.toString(), {
+      method: 'GET',
+      mode: 'no-cors'
+    });
+    window.top.location.href = 'https://cafegate.co.kr/thankyou';
+  } catch (err) {
+    alert('오류가 발생했습니다. 다시 시도해주세요.');
+  }
 }
+
+
+/* Sticky Bar 폼 제출 */
+async function submitStickyBar() {
+  const n = document.getElementById('sb_name');
+  const t = document.getElementById('sb_tel');
+  const r = document.getElementById('sb_region');
+  let ok = true;
+  [n, t].forEach(el => {
+    el.style.background = el.value.trim() ? '' : 'rgba(255,255,255,0.5)';
+    if (!el.value.trim()) ok = false;
+  });
+  if (!ok) { alert('성함과 연락처는 필수입니다.'); return; }
+
+  const params = new URLSearchParams({
+    name:    n.value.trim(),
+    phone:   t.value.trim(),
+    region:  r.value.trim() || '미입력',
+    budget:  '미입력',
+    channel: document.getElementById('sb_source').value || '미입력',
+    message: 'sticky bar 신청'
+  });
+
+  try {
+    await fetch(SCRIPT_URL + '?' + params.toString(), {
+      method: 'GET',
+      mode: 'no-cors'
+    });
+    window.top.location.href = 'https://cafegate.co.kr/thankyou';
+  } catch (err) {
+    alert('오류가 발생했습니다. 다시 시도해주세요.');
+  }
+}
+
+/* TOP 버튼 */
+const topBtn = document.getElementById('topBtn');
+window.addEventListener('scroll', () => {
+  topBtn.classList.toggle('visible', window.scrollY > 400);
+});
 
 /* 스크롤 reveal */
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+<script>
+  window.addEventListener('load', function() {
+    window.parent.postMessage({ height: document.body.scrollHeight }, '*');
+  });
 </script>
 </body>
 </html>
